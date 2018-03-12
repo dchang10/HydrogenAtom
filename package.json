@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "aws-sdk": "^2.224.1",
+    "body-parser": "^1.18.2",
     "bootstrap": "^4.0.0",
     "jquery": "^3.3.1",
     "mathjax": "^2.7.3",
@@ -12,14 +14,24 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-mathjax2": "0.0.1",
+    "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
     "three": "^0.90.0",
     "three-orbit-controls": "^82.1.0"
   },
   "scripts": {
+    "restart": "pm2 startOrRestart ecosystem.config.js",
+    "deploy": "pm2 deploy ecosystem.config.js production",
+    "test": "react-scripts test --env=jsdom",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git:github.com/Dchang10/Blog.git"
+  },
+  "devDependencies": {
+    "pm2": "^2.10.2"
   }
 }

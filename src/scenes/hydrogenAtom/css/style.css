@@ -1,0 +1,116 @@
+hr {
+  background-color: #C22326;
+  border-radius: 5px;
+  border-width: 5px
+}
+
+.Info-description {
+  font-family: 'Bubbler One', sans-serif;
+  color: aaaaaa;
+  font-size: 25px;
+}
+
+.page-border {
+  background-color:#50664c;
+}
+
+.Fixed {
+  position: fixed;
+  z-index: 100000;
+}
+
+.Center {
+  width: 200px;
+  height: 100px;
+  left: 50%;
+  top: 140px;
+  margin: -150px 0 0 -100px;
+  background: transparent;
+}
+
+.radial-element {
+  stroke: #2d1e2f;
+  stroke-width: 3px;
+  -webkit-transition: transform 0.5s;
+  /* For Safari 3.1 to 6.0 */
+  transition: transform 0.5s;
+}
+
+.radial-element:hover {
+  stroke-width: 4px;
+}
+
+.info-panel {
+  padding: 5px;
+  background-color:#bfbfbf;
+  z-index: 1;
+}
+
+#profile-pic {
+  align: center;
+}
+
+#profile-description {
+  font-family: 'Bubbler One', sans-serif;
+  color: rgb(256, 256, 256);
+  font-size: 25px;
+}
+
+#profile-panel {
+  background-color:#665f53;
+  padding: 5px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  border-style: hidden hidden solid hidden;
+  border-width:10px;
+}
+
+#my-footer {
+  background-color: #dddddd;
+  z-index=100000;
+  box-shadow: 0px -10px 10px 10px rgba(0, 0, 0, 1);
+    border-style: solid hidden hidden hidden;
+  border-width:5px
+}
+#elem1{
+        -ms-transform:translate(100px, 0px); /* IE 9 */
+    -webkit-transform:translate(100px, 0px); /* Safari */
+    transform:translate(100px, 0px)
+}
+#elem1:hover{
+      -ms-transform:translate(100px, 0px) scale(1.15); /* IE 9 */
+    -webkit-transform:translate(100px, 0px) scale(1.15); /* Safari */
+    transform:translate(100px, 0px) scale(1.15);
+}
+#elem2{
+    -ms-transform:translate(100px, 0px) rotate(60deg); /* IE 9 */
+    -webkit-transform:translate(100px, 0px) rotate(60deg); /* Safari */
+    transform:translate(100px, 0px) rotate(60deg);
+}
+#elem2:hover{
+      -ms-transform:translate(100px, 0px) rotate(60deg) scale(1.15); /* IE 9 */
+    -webkit-transform:translate(100px, 0px) rotate(60deg) scale(1.15); /* Safari */
+    transform:translate(100px, 0px) rotate(60deg) scale(1.15)
+}
+#elem3{
+    -ms-transform:translate(100px, 0px) rotate(120deg); /* IE 9 */
+    -webkit-transform:translate(100px, 0px) rotate(120deg); /* Safari */
+    transform:translate(100px, 0px) rotate(120deg)
+}
+#elem3:hover{
+      -ms-transform:translate(100px, 0px) rotate(120deg) scale(1.15); /* IE 9 */
+    -webkit-transform:translate(100px, 0px) rotate(120deg) scale(1.15); /* Safari */
+    transform:translate(100px, 0px) rotate(120deg) scale(1.15)
+}
+#git:hover{
+  fill:#3e2f60
+}
+#linkedIn:hover > path{
+  fill:#3e2f60
+}
+#linkedIn:hover >circle{
+  stroke:#3e2f60
+}
+#twitter:hover{
+  fill:#3e2f60
+}

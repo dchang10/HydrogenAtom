@@ -6,26 +6,30 @@ require("jquery/package.json");
 require('popper.js/package.json');
 const $ = require('jquery');
 
-var reload;
-
-export default class OrbitalViewerPanel extends Component{
+export default class ControlPanel extends Component{
     constructor(props){
         super(props);
-        this.state = {n:this.props.n, l:this.props.l, m:this.props.m};
+        this.state = {n:1, l:0, m:0};
         this.Lbuttons = <SubOrbitalButton id='l0' value={0} onFocus={()=>this.handleChangeL(1)}/>;
         this.Mbuttons = <SubOrbitalButton id='m0' value={0} onFocus={()=>this.handleChangeM(1)}/>;
+        this.setStateParent = props.onChange;
     }
 //------------------------------------------------State change Handlers
     handleChangeN(i){// Handles the change in state of N quantum number
         this.Lbuttons = this.renderLbuttons(i);
-        this.setState({n:i});
+        this.setState({n:i,l:0,m:0});
+        $('#l0').parent().click();
+        this.setStateParent(i, 0, 0);
     }
     handleChangeL(i){// Handles the change in state of L quantum number
         this.Mbuttons = this.renderMbuttons(i);
-        this.setState({l:i});
+        this.setState({l:i,m:0});
+        $('#m0').parent().click();
+        this.setStateParent(this.state.n, i, 0);
     }
     handleChangeM(i){// Handles the change in state of M quantum number
         this.setState({m:i});
+        this.setStateParent(this.state.n, this.state.l, i);
     }
 
     //Control Button Rendering
@@ -57,31 +61,25 @@ export default class OrbitalViewerPanel extends Component{
                 <div className='row'>
                     <div className="col-lg-1">
                         <h3 style={{fontFamily:'Bubbler One, sans-serif',
-                            color:'white', paddingTop: '0.1em', align:'left'}}>
+                            color:'white', paddingLeft:'0.2em', paddingTop: '0.1em', align:'left'}}>
                             n
                         </h3>
                     </div>
-                    <div className="btn-group" id="n" data-toggle="buttons">
+                    <div className="btn-group" id="n" data-toggle="buttons" style={{paddingLeft:'1em'}}>
                         {[this.renderNbuttons(1),this.renderNbuttons(2),this.renderNbuttons(3),
                             this.renderNbuttons(4)]}
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-lg-1">
-                        <h3 style={{fontFamily: 'Bubbler One, sans-serif', color:'white',paddingLeft: '0.2em', 
+                        <h3 style={{fontFamily: 'Bubbler One, sans-serif', color:'white',paddingLeft: '0.3em', 
                                 paddingTop: '0.2em'}}>
                             l
                         </h3>
                     </div>
-                    <div className="btn-group" id="l" data-toggle="buttons">
+                    <div className="btn-group" id="l" data-toggle="buttons" style={{paddingLeft:'1em'}}>
                         {this.Lbuttons}
                     </div>
-                    <button className="btn btn-danger" type="button" onClick={reload} 
-                                style={{marginBottom: '0px', fontFamily: 'Bubbler One, serif', 
-                                backgroundColor: '#ac2b37', borderColor: '#ac2b37', 
-                                marginLeft:'auto', marginRight:'5%', height:'38px'}}>
-                            Load Orbital
-                    </button>
                 </div>
                 <div className="row">
                     <div className="col-lg-1">
@@ -89,7 +87,7 @@ export default class OrbitalViewerPanel extends Component{
                             m
                         </h3>
                     </div>
-                    <div className="btn-group" id="m" data-toggle="buttons">
+                    <div className="btn-group" id="m" data-toggle="buttons" style={{paddingLeft:'1em'}}>
                         {this.Mbuttons}
                     </div>
                 </div>
@@ -99,40 +97,12 @@ export default class OrbitalViewerPanel extends Component{
     }
 }
 
-class Mbuttons extends Component{
-    constructor(props){
-        super(props);
-        this.state ={level:props.level};
-    }
-    render(){
-        if(this.props.level > 0){
-            return(
-            <Fragment>
-                <label className="btn btn-outline-primary">
-                    <input type="radio" name="options" id={'m' + -this.props.level} autocomplete="off" onFocus={()=>{this.m = -this.props.level;}}/>  {-this.props.level} 
-                </label>
-                <Mbuttons level={this.props.level-1}/>
-                <label className="btn btn-outline-primary">
-                    <input type="radio" name="options" id={'m' + this.props.level} autocomplete="off" onFocus={()=>{this.m = this.props.level;}}/> {this.props.level}
-                </label>
-            </Fragment>
-            );
-        }else{
-            return(
-            <label className="btn btn-outline-primary">
-                <input type="radio" name="options" id={'m' + this.props.level} autocomplete="off" onFocus={()=>{this.m = this.props.level;}}/> {0}
-            </label>
-            );
-        }
-      
-    }
-}
 
 class SubOrbitalButton extends Component{
     render(){
         if(this.props.value === 0){
             return(<label className="btn btn-outline-primary active">
-                    <input type="radio" name="options"  id={this.props.id} autocomplete="off" onFocus={this.props.onFocus}/>{this.props.value}
+                    <input type="radio" name="options" id={this.props.id} autocomplete="off" onFocus={this.props.onFocus}/>{this.props.value}
                 </label>
             );
         }else{

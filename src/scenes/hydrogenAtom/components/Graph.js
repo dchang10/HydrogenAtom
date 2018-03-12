@@ -1,5 +1,5 @@
 import * as WaveFunctions from './WaveFunction';
-import './css/hydrogen.css';
+import '../css/hydrogen.css';
 const React = require('react');
 const MathJax = require('react-mathjax2');
 
