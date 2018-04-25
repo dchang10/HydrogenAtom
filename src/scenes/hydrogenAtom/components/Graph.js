@@ -214,7 +214,7 @@ export default class Graph extends React.Component{
         return(
                 <div>
                     <EquationDisplay n={this.state.n} l={this.state.l}/>
-                    <canvas ref='canvas' width={500} height={200}>
+                    <canvas ref='canvas' width={500} height={250}>
                     </canvas>
                 </div>
               );

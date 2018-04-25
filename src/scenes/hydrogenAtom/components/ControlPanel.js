@@ -6,6 +6,39 @@ require("jquery/package.json");
 require('popper.js/package.json');
 const $ = require('jquery');
 
+
+class SubOrbitalButton extends Component{
+    render(){
+        if(this.props.value === 0){
+            return(<label className="btn btn-outline-primary active">
+                    <input type="radio" name="options" id={this.props.id} autoComplete="off" onFocus={this.props.onFocus}/>{this.props.value}
+                </label>
+            );
+        }else{
+            return(<label className="btn btn-outline-primary">
+                    <input type="radio" name="options"  id={this.props.id} autoComplete="off" onFocus={this.props.onFocus}/>{this.props.value}
+                </label>
+            );
+        }
+    }    
+}
+
+class OrbitalButton extends Component{
+    render(){
+        if(this.props.value === 1){
+            return(<label className="btn btn-outline-primary active">
+                    <input type="radio" name="options"  id={this.props.id} autoComplete="off" onFocus={this.props.onFocus}/>{this.props.value}
+                </label>
+            );
+        }else{
+            return(<label className="btn btn-outline-primary">
+                    <input type="radio" name="options"  id={this.props.id} autoComplete="off" onFocus={this.props.onFocus}/>{this.props.value}
+                </label>
+            );
+        }
+    }
+}
+
 export default class ControlPanel extends Component{
     constructor(props){
         super(props);
@@ -57,7 +90,7 @@ export default class ControlPanel extends Component{
                 Select Quantum Numbers
             </h3>
             <div className="wrapper" style={{borderStyle:'solid none solid none', 
-                    borderColor:'#aaaaaa', borderWidth:'1px 0  1px 0'}}>
+                    borderColor:'#aaaaaa', borderWidth:'0.05em 0  0.05em 0', padding:'0.5em 0 0.5em 0'}}>
                 <div className='row'>
                     <div className="col-lg-1">
                         <h3 style={{fontFamily:'Bubbler One, sans-serif',
@@ -94,38 +127,5 @@ export default class ControlPanel extends Component{
             </div>
         </Fragment>
               );
-    }
-}
-
-
-class SubOrbitalButton extends Component{
-    render(){
-        if(this.props.value === 0){
-            return(<label className="btn btn-outline-primary active">
-                    <input type="radio" name="options" id={this.props.id} autoComplete="off" onFocus={this.props.onFocus}/>{this.props.value}
-                </label>
-            );
-        }else{
-            return(<label className="btn btn-outline-primary">
-                    <input type="radio" name="options"  id={this.props.id} autoComplete="off" onFocus={this.props.onFocus}/>{this.props.value}
-                </label>
-            );
-        }
-    }    
-}
-
-class OrbitalButton extends Component{
-    render(){
-        if(this.props.value === 1){
-            return(<label className="btn btn-outline-primary active">
-                    <input type="radio" name="options"  id={this.props.id} autoComplete="off" onFocus={this.props.onFocus}/>{this.props.value}
-                </label>
-            );
-        }else{
-            return(<label className="btn btn-outline-primary">
-                    <input type="radio" name="options"  id={this.props.id} autoComplete="off" onFocus={this.props.onFocus}/>{this.props.value}
-                </label>
-            );
-        }
     }
 }

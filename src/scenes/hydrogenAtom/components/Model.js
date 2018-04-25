@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import React from 'react';
 import * as WaveFunctions from './WaveFunction';
 const THREE = require('three')
@@ -11,7 +12,7 @@ let vertexShader = `
     varying vec3 vColor; void main() { 
         vAlpha = alpha; vColor = customColor; 
         vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 ); 
-        gl_PointSize = size * ( 400.0 / -mvPosition.z ); gl_Position = projectionMatrix * mvPosition; 
+        gl_PointSize = size * ( 350.0 / -mvPosition.z ); gl_Position = projectionMatrix * mvPosition; 
     }
     `;
 
@@ -40,7 +41,6 @@ export default class Model extends React.Component{
         this.scenes = [];
         this.orbitalScene = new THREE.Scene();
         this.axisScene= new THREE.Scene();
-        this.orbitalRenderer = new THREE.WebGLRenderer();
         this.axisRenderer = new THREE.WebGLRenderer({alpha:true});
         this.enableRotation = true;
         this.angle = 0;
@@ -81,12 +81,13 @@ export default class Model extends React.Component{
         //reloadChart();
     }
     componentDidMount(){
+
         console.log('orbital viewer mounted');
-        //this.mount.style.width = 0.65 * window.innerWidth + 'px';
-        //this.mount.style.height = 0.35 * window.innerWidth + 'px';
-        this.modelCamera = new THREE.PerspectiveCamera(75, this.mount.offsetWidth 
-                / this.mount.offsetHeight, 0.1, 1000);
-        this.orbitalRenderer.setSize(this.mount.offsetWidth-1.1, this.mount.offsetHeight);
+        this.orbitalRenderer = new THREE.WebGLRenderer({canvas:document.getElementById('my-canvas'), resize:true});
+        let w = $('#model-container').width();
+        let h = $('#model-container').height();
+        this.modelCamera = new THREE.PerspectiveCamera(75, w / h, 0.1, 1000);
+        this.orbitalRenderer.setSize(w, h);
         this.orbitalRenderer.domElement.style.zIndex = "0";
         this.mount.appendChild(this.orbitalRenderer.domElement);
 
@@ -133,7 +134,7 @@ export default class Model extends React.Component{
 
         //---------------------------------------------------------------Axes View
         this.axesCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-        this.axisRenderer.setSize(this.mount.offsetWidth/10, this.mount.offsetWidth/10);
+        this.axisRenderer.setSize(w/10, w/10);
         this.axisRenderer.domElement.style.zIndex = "1";
         this.axisRenderer.domElement.style.position ="absolute";
         this.axisRenderer.domElement.style.bottom ="0";
@@ -180,15 +181,7 @@ export default class Model extends React.Component{
         this.axescontrols.ebablePan = false;
        //-----------------------------------------------------Event Listener for resize 
         window.addEventListener('resize', this.onResize, false);
-        //$('#reload-button').click(()=>{this.n = 2; this.l = 1; this.reload()});
-        /*this.mount.onMouseDown(e => { this.enableRotation = false; });
-        this.mount.onMouseUp(e => {    
-            this.enableRotation = true;
-            let z = this.modelCamera.position.z;
-            let x = this.modelCamera.position.x;
-            this.angle = Math.atan(z / x) -  Math.PI * (x < 0);
-          });*/
-
+        
         this.start();
 
     }
@@ -200,11 +193,13 @@ export default class Model extends React.Component{
 
     }
     onResize (){
-        //this.mount.style.width = window.innerWidth + 'px';
-        //this.mount.style.height = 0.35 * window.innerWidth + 'px';
-        this.modelCamera.aspect = this.mount.offsetWidth / this.mount.offsetHeight;
+        let w = $('#model-container').width();
+        let h = $('#model-container').height();
+
+        this.modelCamera.aspect = w / h;
         this.modelCamera.updateProjectionMatrix();
-        this.orbitalRenderer.setSize(this.mount.offsetWidth -1.1, this.mount.offsetHeight);
+        this.orbitalRenderer.setSize(w, h);
+        this.axisRenderer.setSize(w/10, w/10);
         this.renderScenes();
     }
 
@@ -230,7 +225,6 @@ export default class Model extends React.Component{
         this.renderScenes();
         let z = this.modelCamera.position.z;
         let x = this.modelCamera.position.x;
-        //let y = this.modelCamera.position.y;
         let z1 = this.axesCamera.position.z;
         let x1 = this.axesCamera.position.x;
         let r = Math.sqrt(z * z + x * x);
@@ -283,8 +277,6 @@ export default class Model extends React.Component{
                 max = temp;
             alphas[i] = temp;
         }
-        //if (l > 0)
-        //    return alphas.map(e => e / (5 * parseInt(l) * max));
         return alphas.map(e => e / (0.25 * max + 1.75 * max * (this.props.l > 0)));
     }
 
@@ -299,7 +291,10 @@ export default class Model extends React.Component{
 
     render() {
         return(
-            <div ref={(mount)=>{this.mount=mount}} className={this.props.className}/>
+            <div id='model-container' ref={(mount)=>{this.mount=mount}} className={this.props.className} style={{lineHeight:0}}>
+                <canvas id='my-canvas' canvas resize={true}/>
+            </div>
+
           );
     }
 }

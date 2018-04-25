@@ -32,7 +32,7 @@ class NavigationBar extends Component{
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                <h4 className="text-white">Dominic Chang</h4>
+                <h4 className="text-white">Phys Blog</h4>
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
                     <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li className="nav-item">
