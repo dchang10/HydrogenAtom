@@ -6,7 +6,6 @@ import Model from './Model.js';
 import Graph from './Graph.js';
 import ControlPanel from './ControlPanel.js';
 import * as  WaveFunctions from './WaveFunction';
-import '../css/App.css';
 import '../css/hydrogen.css';
 import atom from '../images/atom.svg';
 
@@ -16,7 +15,7 @@ function Banner(){
                 backgroundPosition:'50% 50%', backgroundSize:'30em',
                 backgroundColor:'gray', backgroundImage: `url(${atom})`,
                 backgroundRepeat:'no-repeat', opacity:'0.8'}}>
-                <h1 className="blend-title box-title" align='center' style={{position:'absolute', top: '2.45em',
+                <h1 className="blend-title box-title" align='center' style={{position:'absolute', top: '3.08em',
     left: '50%', msTransform: 'translate(-50%, -50%)', transform: 'translate(-50%, -50%)'}}> The Hydrogen Atom</h1>
         </div>
         );

@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import HydrogenAtom from './scenes/hydrogenAtom/components/HydrogenAtom';
 import Home from './scenes/Home/components/Home';
-
+import Login from './scenes/Login/components/Login';
 
 
 const routes = [
@@ -19,6 +19,11 @@ const routes = [
         path: "/hydrogenAtom",
         main: () => <HydrogenAtom/>,
         key: "/hydrogenAtom"
+    },
+    {
+        path: "/login",
+        main: () => <Login/>,
+        key: "/login"
     }
 ];
 
@@ -41,6 +46,10 @@ class NavigationBar extends Component{
                         <li className="nav-item">
                             <Link className="nav-link" to="/hydrogenAtom">Hydrogen Atom</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/login">Login</Link>
+                        </li>
+
                     </ul>
                 </div>
             </nav>
@@ -69,6 +78,7 @@ class App extends Component {
             <Router>
             <Fragment>
                 <NavigationBar/>
+                <div style={{padding:'1.5em'}}/>
                 {routes.map((route, index) => (
                     <ScrollToTopRoute
                         key={route.key}

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
+import '../css/blog.css';
 import FeynmanDiagram from '../images/Feynmandiagram.svg'
 
 
@@ -21,7 +22,7 @@ class Banner extends Component{
 class ProfileDescription extends Component {
     render(){
         return(
-            <Fragment>
+            <div style={{margin:'20px', padding:'20px', backgroundColor:'white'}}>
                 <h2 style={{paddingTop:'10px'}}>
                     {"First Blog Post"}
                 </h2>
@@ -41,7 +42,7 @@ class ProfileDescription extends Component {
                 <p>
                     Vestibulum dictum, erat in posuere malesuada, nulla lectus luctus lorem, non sodales lorem tellus in nibh. Nullam sed justo massa. Proin auctor, odio a finibus pretium, tellus nibh ultricies est, vel tempor enim leo eu odio. Sed id nisi a libero sodales tristique vel a nisl. Cras bibendum tempus ligula, sit amet interdum magna faucibus a. Vivamus vel neque eget augue ullamcorper semper et et ex. Praesent vel tortor magna. Donec ultrices ultrices bibendum. Pellentesque condimentum lacus id orci elementum lacinia. In hac habitasse platea dictumst.  
                 </p>
-            </Fragment>
+            </div>
         );
     }
 }
@@ -81,11 +82,13 @@ class Home extends Component {
             <div className="container-fluid">
                 <Banner>Physics Blog</Banner>
                 <div className="row" style={{boxShadow:'0px 0px 10px 10px rgba(0,0,0,0.4)',zIndex:'2'}}>
-                    <div className='col-lg-2' style={{backgroundColor:'#eeeeee'}}/>
-                    <div className='col-lg-8'>
+                     <div className='col-lg-8' style={{backgroundColor:'#eeeeee'}}>
                         <ProfileDescription/>
-                    </div>
-                    <div className='col-lg-2' style={{backgroundColor:'#eeeeee'}}/>
+                        <ProfileDescription/>
+                     </div>
+                     <div className='col-lg-4' style={{backgroundColor:'#eeeeee'}}>
+                        <ProfileDescription/>
+                     </div>
                 </div>
             </div>
             <Footer/>

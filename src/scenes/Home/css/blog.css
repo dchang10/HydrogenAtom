@@ -1,0 +1,135 @@
+body {
+    margin: 0px;
+}
+
+h1 {
+    font-family: 'Zilla Slab', serif;
+    font-size: 500%;
+    margin-bottom: 10px;
+    margin-top: 0px;
+}
+
+h2 {
+    font-family: 'Zilla Slab', serif;
+    color: black;
+}
+
+h3 {
+    font-family: 'Zilla Slab', serif;
+}
+
+p {
+    text-align: left;
+}
+
+select {
+    font-family: "Courier";
+    color: black;
+    font-size: 14px;
+    width: 85px
+}
+
+option {
+    font-family: "Courier";
+    font-size: 14px;
+}
+
+button {
+    color: black;
+    font-family: "Courier";
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+ul{color: white}
+li {
+  font-family:'Bubbler One', sans-serif;
+}
+
+.card {
+   background-color: white;
+   margin-top: 20px;
+   padding:20px;
+}
+.box-title {
+    border-style: solid solid solid solid;
+    border-left-width: 10px;
+    border-right-width: 10px;
+}
+
+.box-title-2 {
+    border-left-style: solid;
+    border-right-style: solid;
+    border-left-width: 10px;
+    border-right-width: 10px;
+}
+
+.blend-title {
+    color: white;
+    mix-blend-mode: screen;
+}
+
+#elem1 {
+    -ms-transform: translate(100px, 0px);
+    /* IE 9 */
+    -webkit-transform: translate(100px, 0px);
+    /* Safari */
+    transform: translate(100px, 0px)
+}
+
+#elem1:hover {
+    -ms-transform: translate(100px, 0px) scale(1.15);
+    /* IE 9 */
+    -webkit-transform: translate(100px, 0px) scale(1.15);
+    /* Safari */
+    transform: translate(100px, 0px) scale(1.15)
+}
+
+#elem2 {
+    -ms-transform: translate(100px, 0px) rotate(60deg);
+    /* IE 9 */
+    -webkit-transform: translate(100px, 0px) rotate(60deg);
+    /* Safari */
+    transform: translate(100px, 0px) rotate(60deg)
+}
+
+#elem2:hover {
+    -ms-transform: translate(100px, 0px) rotate(60deg) scale(1.15);
+    /* IE 9 */
+    -webkit-transform: translate(100px, 0px) rotate(60deg) scale(1.15);
+    /* Safari */
+    transform: translate(100px, 0px) rotate(60deg) scale(1.15)
+}
+
+#elem3 {
+    -ms-transform: translate(100px, 0px) rotate(120deg);
+    /* IE 9 */
+    -webkit-transform: translate(100px, 0px) rotate(120deg);
+    /* Safari */
+    transform: translate(100px, 0px) rotate(120deg)
+}
+
+#elem3:hover {
+    -ms-transform: translate(100px, 0px) rotate(120deg) scale(1.15);
+    /* IE 9 */
+    -webkit-transform: translate(100px, 0px) rotate(120deg) scale(1.15);
+    /* Safari */
+    transform: translate(100px, 0px) rotate(120deg) scale(1.15)
+}
+#my-footer {
+  background-color: #dddddd;
+  z-index : 100000;
+  border-style: solid hidden hidden hidden;
+  border-width:5px
+}
+#git:hover{
+  fill:#3e2f60
+}
+#linkedIn:hover > path{
+  fill:#3e2f60
+}
+#linkedIn:hover >circle{
+  stroke:#3e2f60
+}
+#twitter:hover{
+  fill:#3e2f60
+}

@@ -11,12 +11,12 @@ class SubOrbitalButton extends Component{
     render(){
         if(this.props.value === 0){
             return(<label className="btn btn-outline-primary active">
-                    <input type="radio" name="options" id={this.props.id} autoComplete="off" onFocus={this.props.onFocus}/>{this.props.value}
+                    <input className="hydrogen__input" type="radio" name="options" id={this.props.id} autoComplete="off" onFocus={this.props.onFocus}/>{this.props.value}
                 </label>
             );
         }else{
             return(<label className="btn btn-outline-primary">
-                    <input type="radio" name="options"  id={this.props.id} autoComplete="off" onFocus={this.props.onFocus}/>{this.props.value}
+                    <input className="hydrogen__input" type="radio" name="options"  id={this.props.id} autoComplete="off" onFocus={this.props.onFocus}/>{this.props.value}
                 </label>
             );
         }
@@ -27,12 +27,12 @@ class OrbitalButton extends Component{
     render(){
         if(this.props.value === 1){
             return(<label className="btn btn-outline-primary active">
-                    <input type="radio" name="options"  id={this.props.id} autoComplete="off" onFocus={this.props.onFocus}/>{this.props.value}
+                    <input className="hydrogen__input" type="radio" name="options"  id={this.props.id} autoComplete="off" onFocus={this.props.onFocus}/>{this.props.value}
                 </label>
             );
         }else{
             return(<label className="btn btn-outline-primary">
-                    <input type="radio" name="options"  id={this.props.id} autoComplete="off" onFocus={this.props.onFocus}/>{this.props.value}
+                    <input className="hydrogen__input" type="radio" name="options"  id={this.props.id} autoComplete="off" onFocus={this.props.onFocus}/>{this.props.value}
                 </label>
             );
         }

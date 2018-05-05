@@ -6,8 +6,8 @@ module.exports = {
   deploy: {
     production: {
       user: 'ubuntu',
-      host: 'ec2-18-216-201-104.us-east-2.compute.amazonaws.com',
-      key: '~/.ssh/Blog.pem',
+      host: 'ec2-18-188-204-67.us-east-2.compute.amazonaws.com',
+      key: '~/.ssh/blog.pem',
       ref: 'origin/master',
       repo: 'git@github.com:Dchang10/Blog.git',
       path: '/home/ubuntu/Blog',

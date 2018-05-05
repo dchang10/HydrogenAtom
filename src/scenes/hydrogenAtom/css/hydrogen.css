@@ -49,7 +49,7 @@ ul{color: white}
 li {
   font-family:'Bubbler One', sans-serif;
 }
-input {
+.hydrogen__input {
     clip: rect(0,0,0,0);
     position:absolute;
 }
