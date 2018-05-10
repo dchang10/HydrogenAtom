@@ -37,7 +37,7 @@ class BlogCard extends Component {
     render(){
         return(
             <div className='card'>
-                <Link to={`/post/${this.props.slug}`} onClick={()=>{window.location.reload()}}>
+                <Link to={`/post/${this.props.slug}`} >
                     <div style={{height:'25em',backgroundSize:'70em',backgroundPosition:'50% 50%', backgroundRepeat:'no-repeat', textAlign:'center', backgroundImage:`url(${this.props.image})`}}>
                     </div>
                     <h2 style={{paddingTop:'0.5em'}}>
