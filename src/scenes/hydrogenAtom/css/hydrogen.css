@@ -27,27 +27,21 @@ p {
     text-align: left;
 }
 
-select {
-    font-family: "Courier";
-    color: black;
-    font-size: 14px;
-    width: 85px
-}
-
 option {
     font-family: "Courier";
     font-size: 14px;
 }
 
-button {
+
+ul{color: white}
+li {
+  font-family:'Bubbler One', sans-serif;
+}
+.hydrogen__button {
     color: black;
     font-family: "Courier";
     font-size: 30px;
     margin-bottom: 15px;
-}
-ul{color: white}
-li {
-  font-family:'Bubbler One', sans-serif;
 }
 .hydrogen__input {
     clip: rect(0,0,0,0);
@@ -204,18 +198,6 @@ li {
   z-index : 100000;
   border-style: solid hidden hidden hidden;
   border-width:5px
-}
-#git:hover{
-  fill:#3e2f60
-}
-#linkedIn:hover > path{
-  fill:#3e2f60
-}
-#linkedIn:hover >circle{
-  stroke:#3e2f60
-}
-#twitter:hover{
-  fill:#3e2f60
 }
 input[type=range] {
     margin-bottom: 10px;
