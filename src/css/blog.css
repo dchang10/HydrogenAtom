@@ -20,26 +20,10 @@ h3 {
 
 p {
     text-align: left;
+    white-space: pre-line;
 }
 
-select {
-    font-family: "Courier";
-    color: black;
-    font-size: 14px;
-    width: 85px
-}
 
-option {
-    font-family: "Courier";
-    font-size: 14px;
-}
-
-button {
-    color: black;
-    font-family: "Courier";
-    font-size: 30px;
-    margin-bottom: 15px;
-}
 ul{color: white}
 li {
   font-family:'Bubbler One', sans-serif;
@@ -47,8 +31,9 @@ li {
 
 .card {
    background-color: white;
-   margin-top: 20px;
-   padding:20px;
+   margin-top: 1em;
+   padding: 1em;
+   box-shadow: 0 0em 0.8em 0 rgba(0, 0, 0, 0.3);
 }
 .box-title {
     border-style: solid solid solid solid;
@@ -122,14 +107,11 @@ li {
   border-width:5px
 }
 #git:hover{
-  fill:#3e2f60
+  color:red
 }
-#linkedIn:hover > path{
-  fill:#3e2f60
-}
-#linkedIn:hover >circle{
-  stroke:#3e2f60
+#linkedIn:hover{
+  color:red
 }
 #twitter:hover{
-  fill:#3e2f60
+  color:#3e2f60
 }
