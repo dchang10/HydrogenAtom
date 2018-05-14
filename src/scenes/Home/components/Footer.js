@@ -16,7 +16,7 @@ export default function Footer(){
                 </div>
                 <div className="col-sm-2" >
                     <a href="https://buttercms.com/">
-                        <img style={{align:'right',paddingTop:'0.2em'}} class="logo" src={`${butterlogo}`} height="20"/>
+                        <img style={{align:'right',paddingTop:'0.2em'}} className="logo" src={`${butterlogo}`} height="20"/>
                     </a>
                 </div>
             </div>

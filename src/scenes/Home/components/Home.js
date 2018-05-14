@@ -134,7 +134,7 @@ class Home extends Component {
                         <div className='col-sm-2' style={{backgroundColor:'#eeeeee'}}/>
                         <div className='col-sm-8' style={{backgroundColor:'#eeeeee'}}>
                             {this.state.resp.data.map((post) => {
-                                console.log(post);
+                                //console.log(post);
                                 return(<div key={post.slug}>
                                     <BlogCard title={post.title} summary={post.summary} image={post.featured_image} slug={post.slug} published={post.published}/>
                                 </div>);

@@ -3,6 +3,9 @@ import Butter from 'buttercms'
 import { Helmet } from "react-helmet";
 import Banner from '../Banner.js';
 import Footer from '../Footer.js';
+var SystemJS = require('systemjs');
+//import MathJax from 'mathjax/unpacked/MathJax.js';
+//console.log(MathJax);
 
 const butter = Butter('cc7eb55c33094b691f4f9454c0b3e19c354c214a');
     window.MathJax = {
@@ -31,29 +34,46 @@ class BlogPost extends Component {
         post: resp.data.data
       })
     });
-
-  }
-  componentDidMount(){
-    var head = document.getElementsByTagName("body")[0], script;
-    script = document.createElement("script");
+}
+  componentWillUpdate(){
+    var head = document.getElementsByTagName("head")[0], script;
+    if (document.getElementById("script")) {
+    	head.removeChild(document.getElementById("script"));
+    	head.removeChild(document.getElementById("script2"));
+    }
+    var script = document.createElement("script");
+    script.id = 'script';
     script.type = "text/x-mathjax-config";
     script[(window.opera ? "innerHTML" : "text")] =
       "MathJax.Hub.Config({\n" +
       "  tex2jax: { inlineMath: [['$','$'], ['\\\\(','\\\\)']] }\n" +
       "});";
-    head.appendChild(script);
-    script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML";
+    script.async = true;
     head.appendChild(script);
 
-    // script = document.createElement("script");
-    // script.type = "text/javascript";
-    // script[(window.opera ? "innerHTML" : "text")] =
-    //   'MathJax.Hub.Queue(["Typeset",MathJax.Hub]);\n' +
-    //   'MathJax.Hub.Queue(["Typeset",MathJax.Hub]);';
-    // head.appendChild(script);
-    //window.MathJax.Hub.Queue(["Typeset",MathJax.Hub])
+    script = document.createElement("script");
+    script.id = 'script2';
+    script.type = "text/javascript";
+    script.src  = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    var inlineScript = document.createTextNode("alert('Hello World!');Window.A = MathJax;console.log(MathJax);MathJax.Hub.Queue(['Typeset',MathJax.Hub]);MathJax.Hub.Queue(['Typeset',MathJax.Hub]);"+ Date.now());
+    script.appendChild(inlineScript ); 
+    script.async = true;
+    script.onreadystatechange= function () {
+      if (this.readyState === 'complete') {
+        alert("Script!");
+      }
+   }
+    script.onload = function(){
+        alert("Script is ready!");
+        console.log(Date.now())
+    };
+    //Window.A.Hub.Queue(['Typeset',MathJax.Hub])
+    head.appendChild(script);
+
+
+    var evt = document.createEvent('Event');  
+    evt.initEvent('load', false, false);  
+    window.dispatchEvent(evt);
     }
 
   render() {

@@ -4,6 +4,31 @@
 
     <link href="https://fonts.googleapis.com/css?family=Bubbler+One" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab" rel="stylesheet">
+    <script id="loadarea" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/contrib/auto-render.min.js" integrity="sha384-IiI65aU9ZYub2MY9zhtKd1H2ps7xxf+eb2YFG9lX6uRqpXCvBTOidPRCXCrQ++Uc" crossorigin="anonymous"></script>
+<!--    <script type = "text/x-mathjax-config">
+      MathJax.Hub.Config({\n
+        tex2jax: { inlineMath: [['$','$'], ['\\\\(','\\\\)']] }
+      });
+    </script>
+    <script type="text/javascript">
+      window.MathJax = {
+        AuthorInit: function () {
+          MathJax.Hub.Register.StartupHook("Begin",function () {
+            MathJax.Hub.Queue(
+              ["Typeset",MathJax.Hub]
+            )
+          });
+        }
+      };
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML&delayStartupUntil=onload"> 
+        window.math = MathJax;
+             console.log(MathJax)
+    </script>!-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
@@ -39,5 +64,8 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+      <script>
+    renderMathInElement(document.body);
+  </script>
   </body>
 </html>
