@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import '../../../css/blog.css';
 import FeynmanDiagram from '../images/Feynmandiagram.svg';
-import butterlogo from '../images/butter-light.6b4ab5bd4625.svg';
 import Banner from './Banner.js';
 import Footer from './Footer.js';
 
