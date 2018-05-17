@@ -102,15 +102,4 @@ hr {
     -webkit-transform:translate(100px, 0px) rotate(120deg) scale(1.15); /* Safari */
     transform:translate(100px, 0px) rotate(120deg) scale(1.15)
 }
-#git:hover{
-  fill:#3e2f60
-}
-#linkedIn:hover > path{
-  fill:#3e2f60
-}
-#linkedIn:hover >circle{
-  stroke:#3e2f60
-}
-#twitter:hover{
-  fill:#3e2f60
-}
+
