@@ -103,9 +103,13 @@ class BlogPost extends Component {
             <meta name="og:image" content={post.featured_image} />
           </Helmet>
           <div className="container-fluid" style={{minHeight:'50em'}} >
-            <div style={{textAlign:'center', padding:'7em'}}>
-              <h1 className="box-title-2" style={{color:'#333333', display: 'inline'}}>{post.title}</h1>
-              <p style={{textAlign:'center'}}>{'Posted on ' + date[1] + ' ' + date[2] + ', ' + date[0]}</p>
+            <div className="row">
+              <div className="col-sm-3"/>
+              <div className="col-sm-6" style={{textAlign:'center', paddingTop:'7em', paddingBottom:'7em'}}>
+                <h1 className="box-title-2" style={{color:'#333333', display: 'inline'}}>{post.title}</h1>
+                <p style={{textAlign:'center'}}>{'Posted on ' + date[1] + ' ' + date[2] + ', ' + date[0]}</p>
+              </div>
+              <div className="col-sm-3"/>
             </div>
             <Banner style={{
                 backgroundSize:'100em', 

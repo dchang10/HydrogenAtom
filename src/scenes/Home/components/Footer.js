@@ -10,11 +10,11 @@ export default function Footer(){
     return(
         <footer id="my-footer" className="container-fluid " style={{backgroundColor:'#212529', color:'white', borderStyle:'hidden'}}>
             <div className="row card-footer justify-content-between" style={{height:'10em'}}>
-                <div className="col-sm-2" >
+                <div className="col-sm-2" style={{textAlign:'center'}}>
                         <FontAwesomeIcon id="git" icon={brands.faGithub}  style={{height:"2em",width:"3.5em"}}/>
                         <FontAwesomeIcon id="linkedIn" icon={brands.faLinkedinIn} style={{height:"2em",width:"3.5em"}}/>
                 </div>
-                <div className="col-sm-2" >
+                <div className="col-sm-2" style={{textAlign:'center'}}>
                     <a href="https://buttercms.com/">
                         <img style={{align:'right',paddingTop:'0.2em'}} className="logo" src={`${butterlogo}`} height="25" alt='Link to ButterCMS'/>
                     </a>
