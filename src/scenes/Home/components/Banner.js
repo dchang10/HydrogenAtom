@@ -9,7 +9,7 @@ export default class Banner extends Component{
 		if(this.props.style == null){
 			this.style = {
                 backgroundSize:'10em',
-                backgroundColor:'#ee0000', 
+                backgroundColor:'#AC2B37', 
                 backgroundImage: `url(${this.props.image})`,
                 opacity:'0.8'
             };
@@ -18,8 +18,8 @@ export default class Banner extends Component{
 			this.style.backgroundImage = this.props.image?`url(${this.props.image})`:null
 		}
 		let style = this.style;
-		this.style.borderStyle = style.borderStyle?style.borderStyle:'hidden hidden solid hidden';
-		this.style.borderWidth = style.borderWidth?style.borderWidth:'0px 0px 0.3em 0px';
+		this.style.borderStyle = style.borderStyle?style.borderStyle:'solid hidden solid hidden';
+		this.style.borderWidth = style.borderWidth?style.borderWidth:'0.3em 0em 0.3em 0em';
 		this.style.position = style.position?style.position:'relative';
 		this.style.opacity = style.opacity?style.opacity:'0.8';
 		this.style.height = style.height?style.height:'18em';
@@ -27,11 +27,15 @@ export default class Banner extends Component{
 		this.style.backgroundColor=style.backgroundColor?style.backgroundColor:'#ee0000';
 	}
     render(){
-        return(
-            <div className="row" style={this.style}>
-                    <h1 className="blend-title box-title" align='center' style={{position:'absolute', top: '50%',
-        left: '50%', msTransform: 'translate(-50%, -50%)', transform: 'translate(-50%, -50%)'}}>{this.props.children}</h1>
-            </div>
-            );
+    	if (this.props.children){
+	        return(
+	            <div className="row" style={this.style}>
+	                    <h1 className="blend-title box-title" align='center' style={{position:'absolute', top: '50%',
+	        left: '50%', msTransform: 'translate(-50%, -50%)', transform: 'translate(-50%, -50%)'}}>{this.props.children}</h1>
+	            </div>
+	            );
+	    } else {
+	    	return(<div className="row" style={this.style}/>);
+	    }
     }
 }

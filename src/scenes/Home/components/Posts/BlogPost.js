@@ -1,4 +1,4 @@
-import React, { Component,Fragment } from 'react';
+import React, { Component} from 'react';
 import Butter from 'buttercms'
 import { Helmet } from "react-helmet";
 import Banner from '../Banner.js';
@@ -33,26 +33,31 @@ class BlogPost extends Component {
 
       //----------------------------------------Parse post for math
       let body = post.body.split(/<math>|<\/math>/g);
-      // clean string segments
       let newBody = [];
-      for(let str of body){
+      if (body.length > 1){
+        // clean string segments
+        
+        for(let str of body){
 
-        //clean tags
-        let newstr = str;
-        let end = newstr.match(/^\s*<\/div>([\s\S]*)/);
-        let type = 0;
-        if (end != null){
-          newstr = end[1];
-          type = 1;
-        }
-        let begin = str.match(/([\s\S]*)<div>\s*$/);
-        if (begin != null){
-          newstr = begin[1];
-          type = 1;
-        }
+          //clean tags
+          let newstr = str;
+          let end = newstr.match(/^\s*<\/div>([\s\S]*)/);
+          let type = 0;
+          if (end != null){
+            newstr = end[1];
+            type = 1;
+          }
+          let begin = str.match(/([\s\S]*)<div>\s*$/);
+          if (begin != null){
+            newstr = begin[1];
+            type = 1;
+          }
 
-        //add strings to newbody
-        newBody.push({string:newstr,type:type});
+          //add strings to newbody
+          newBody.push({string:newstr,type:type});
+        }
+      } else {
+        newBody = [{string:body, type:1}]
       }
       let elements = [];
       let key = 0;
@@ -63,7 +68,7 @@ class BlogPost extends Component {
           } else {
             elements.push(
               <MathJax.Context key={key} input={'tex'}>
-                <MathJax.Node inline>{segment.string}</MathJax.Node>
+                <MathJax.Node>{segment.string}</MathJax.Node>
               </MathJax.Context>
               );
             key += 1;
@@ -71,26 +76,43 @@ class BlogPost extends Component {
       }
 
       return (
-        <div>
+        <div style={{backgroundColor:'#FFFEF4'}} stye={{minHeight:'50em'}}>
           <Helmet>
             <title>{post.seo_title}</title>
             <meta name="description" content={post.meta_description} />
             <meta name="og:image" content={post.featured_image} />
           </Helmet>
-          <Banner style={{backgroundSize:'100em', backgroundRepeat:'repeat', textAlign:'center',opacity:'0.9'}} image={post.featured_image}>{post.title}</Banner>
-          <h1>{post.title}</h1>
-          <Fragment>
-
-          <h3>Howdy</h3>
-            {elements.map((element, i)=>(element))}
-          </Fragment>
+          <div className="container-fluid" style={{minHeight:'50em'}} >
+            <div style={{textAlign:'center', padding:'7em'}}>
+              <h1 className="box-title-2" style={{color:'#333333', display: 'inline'}}>{post.title}</h1>
+            </div>
+            <Banner style={{
+                backgroundSize:'100em', 
+                backgroundRepeat:'repeat', 
+                textAlign:'center',opacity:'0.9', 
+                marginBottom:'10em',height:'12em',
+                borderWidth:'0em 0em 0em 0em'
+              }} image={post.featured_image}
+            ></Banner>
+            <div className="row">
+              <div className="col-sm-3"/>
+              <div className="col-sm-6" >
+                {elements.map((element, i)=>(element))}
+              </div>
+              <div className="col-sm-3"/>
+            </div>
+          </div>
           <Footer/>
         </div>
       );
     } else {
       return (
         <div>
-          Loading...
+          <div style={{minHeight:'50em', textAlign:'center'}}>
+            <h1 className="box-title-2" style={{color:'#333333', display: 'inline'}}>
+              Loading...
+            </h1>   
+          </div>
           <Footer/>
         </div>
       );
