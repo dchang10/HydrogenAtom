@@ -24,7 +24,7 @@ export default class Banner extends Component{
 		this.style.opacity = style.opacity?style.opacity:'0.8';
 		this.style.height = style.height?style.height:'18em';
 		this.style.backgroundPosition = style.backgroundPosition?style.backgroundPosition:'50% 50%'; 
-		this.style.backgroundColor=style.backgroundColor?style.backgroundColor:'#ee0000';
+		this.style.backgroundColor=style.backgroundColor?style.backgroundColor:'#AC2B37';
 	}
     render(){
     	if (this.props.children){
