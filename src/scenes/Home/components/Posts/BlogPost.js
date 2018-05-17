@@ -14,6 +14,7 @@ class BlogPost extends Component {
     this.state = {
       loaded: false
     };
+
   }
   
   componentWillMount() {
@@ -74,6 +75,25 @@ class BlogPost extends Component {
             key += 1;
           }
       }
+      let date = [];
+      //fix date
+      let months = {
+        '01':'January', 
+        '02':'February', 
+        '03':'March',
+        '04':'April',
+        '05':'May',
+        '06':'June',
+        '07':'July',
+        '08':'August',
+        '09':'September',
+        '10':'October',
+        '11':'November',
+        '12':'December'
+        }
+      date = post.published.split("-");
+      date[2] = date[2].slice(0,2);
+      date[1] = months[date[1]];
 
       return (
         <div style={{backgroundColor:'#FFFEF4'}} stye={{minHeight:'50em'}}>
@@ -85,6 +105,7 @@ class BlogPost extends Component {
           <div className="container-fluid" style={{minHeight:'50em'}} >
             <div style={{textAlign:'center', padding:'7em'}}>
               <h1 className="box-title-2" style={{color:'#333333', display: 'inline'}}>{post.title}</h1>
+              <p style={{textAlign:'center'}}>{'Posted on ' + date[1] + ' ' + date[2] + ', ' + date[0]}</p>
             </div>
             <Banner style={{
                 backgroundSize:'100em', 

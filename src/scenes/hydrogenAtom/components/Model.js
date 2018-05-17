@@ -58,8 +58,8 @@ export default class Model extends React.Component{
             waveFunc += 'Neg';
         waveFunc += Math.abs(this.props.m);
 
-        this.range = 3 + 2 * this.props.n * this.props.n + 6 * this.props.l
-        this.resolution = 42 + 3 * this.props.n * this.props.n;
+        this.range = 3 + 2.5 * this.props.n * this.props.n + 6 * this.props.l
+        this.resolution = 42 + 2.5 * this.props.n * this.props.n;
 
 
         let posArr = WaveFunctions.simpsonIntegrate(WaveFunctions.getFunc(waveFunc)/*eval(waveFunc)*/, -this.range, this.range, -this.range, this.range, -this.range, this.range, this.resolution);

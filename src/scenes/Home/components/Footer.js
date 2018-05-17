@@ -8,7 +8,7 @@ import brands from '@fortawesome/fontawesome-free-brands';
 
 export default function Footer(){
     return(
-        <footer id="my-footer" className="container-fluid ">
+        <footer id="my-footer" className="container-fluid " style={{backgroundColor:'#212529', color:'white', borderStyle:'hidden'}}>
             <div className="row card-footer justify-content-between" style={{height:'10em'}}>
                 <div className="col-sm-2" >
                         <FontAwesomeIcon id="git" icon={brands.faGithub}  style={{height:"2em",width:"3.5em"}}/>
