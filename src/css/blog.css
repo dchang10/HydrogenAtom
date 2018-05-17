@@ -27,7 +27,16 @@ p {
 ul{color: white}
 li {
   font-family:'Bubbler One', sans-serif;
-}
+}  
+img {
+   max-width: 100%;
+   max-height: 100vh;
+   margin: auto;
+  }
+  .imgbox {
+   display: grid;
+   height: 100%;
+  }
 
 .card {
    background-color: white;
@@ -52,7 +61,12 @@ li {
     color: white;
     mix-blend-mode: screen;
 }
-
+.page-link {
+    text-align: center;
+    margin-top: 0em;  
+    background-color:#eeeeee;
+    border: none;
+}
 #elem1 {
     -ms-transform: translate(100px, 0px);
     /* IE 9 */

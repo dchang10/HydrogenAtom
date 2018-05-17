@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import '../../../css/blog.css';
@@ -9,14 +9,14 @@ import brands from '@fortawesome/fontawesome-free-brands';
 export default function Footer(){
     return(
         <footer id="my-footer" className="container-fluid ">
-            <div className="row card-footer justify-content-between" style={{height:'5em'}}>
+            <div className="row card-footer justify-content-between" style={{height:'10em'}}>
                 <div className="col-sm-2" >
-                        <FontAwesomeIcon id="git" icon={brands.faGithub}  style={{height:"2em",width:"3em"}}/>
-                        <FontAwesomeIcon id="linkedIn" icon={brands.faLinkedinIn} style={{height:"2em",width:"3em"}}/>
+                        <FontAwesomeIcon id="git" icon={brands.faGithub}  style={{height:"2em",width:"3.5em"}}/>
+                        <FontAwesomeIcon id="linkedIn" icon={brands.faLinkedinIn} style={{height:"2em",width:"3.5em"}}/>
                 </div>
                 <div className="col-sm-2" >
                     <a href="https://buttercms.com/">
-                        <img style={{align:'right',paddingTop:'0.2em'}} class="logo" src={`${butterlogo}`} height="20"/>
+                        <img style={{align:'right',paddingTop:'0.2em'}} className="logo" src={`${butterlogo}`} height="25" alt='Link to ButterCMS'/>
                     </a>
                 </div>
             </div>

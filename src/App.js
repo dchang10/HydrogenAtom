@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import HydrogenAtom from './scenes/hydrogenAtom/components/HydrogenAtom';
 import Home from './scenes/Home/components/Home';
 import Login from './scenes/Login/components/Login';
 import BlogPost from './scenes/Home/components/Posts/BlogPost';
+import NotFound from './scenes/Home/components/NotFound';
 
 
 const routes = [
@@ -42,14 +43,14 @@ class NavigationBar extends Component{
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                <h4 className="text-white">Phys Blog</h4>
+                <h4 className="text-white" style={{marginBottom:'0em'}}>Phys Blog</h4>
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
                     <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li className="nav-item">
-                            <Link className="nav-link" to="/p/1">Home<span className="sr-only">(current)</span></Link>
+                            <Link className="nav-link" to="/" style={{padding:'1em 0em 1em 1em'}}>Home<span className="sr-only">(current)</span></Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/pages/hydrogenAtom">Hydrogen Atom</Link>
+                            <Link className="nav-link" to="/pages/hydrogenAtom" style={{padding:'1em 0em 1em 1em'}}>Hydrogen Atom</Link>
                         </li>
                     </ul>
                 </div>
@@ -75,31 +76,21 @@ class ScrollToTopRoute extends Component {
 
 
 class App extends Component {
-    constructor(props){
-        super(props);
-        this.state={refresh:false};
-        this.refresh = this.refresh.bind(this);
-    }
 
-    refresh(){
-        console.log('refresh');
-        if(!this.state.refresh){
-          window.location.reload();
-          this.setState({refresh:true});
-        }
-      }
-    
     render() {
 
         return(
             <Router>
-            <Fragment>
-                <NavigationBar/>
-                <div style={{padding:'1.5em'}}/>
-                <ScrollToTopRoute exact={true} path="/" component={Home} />
-                <ScrollToTopRoute path="/p/:page" component={Home} />
-                <ScrollToTopRoute path="/pages/hydrogenAtom" component={HydrogenAtom} />
-                <ScrollToTopRoute path="/post/:slug" component={BlogPost} />
+                <Fragment>
+                    <NavigationBar/>
+                    <div style={{padding:'1.5em'}}/>
+                    <Switch>
+                        <ScrollToTopRoute path="/p/:page" component={Home} />
+                        <Redirect exact from="/" to="/p/1"/>
+                        <ScrollToTopRoute path="/pages/hydrogenAtom" component={HydrogenAtom} />
+                        <ScrollToTopRoute path="/post/:slug" component={BlogPost} />
+                        <ScrollToTopRoute component={NotFound} />
+                    </Switch>
                 </Fragment>
             </Router>
         );

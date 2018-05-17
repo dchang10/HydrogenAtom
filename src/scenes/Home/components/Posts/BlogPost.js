@@ -1,17 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
 import Butter from 'buttercms'
 import { Helmet } from "react-helmet";
 import Banner from '../Banner.js';
 import Footer from '../Footer.js';
+import MathJax from 'react-mathjax2';
 
 const butter = Butter('cc7eb55c33094b691f4f9454c0b3e19c354c214a');
-    window.MathJax = {
-      tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-        processEscapes: true
-      }
-    };
 class BlogPost extends Component {
 
   constructor(props) {
@@ -31,52 +25,94 @@ class BlogPost extends Component {
         post: resp.data.data
       })
     });
-
-  }
-  componentDidMount(){
-    var head = document.getElementsByTagName("body")[0], script;
-    script = document.createElement("script");
-    script.type = "text/x-mathjax-config";
-    script[(window.opera ? "innerHTML" : "text")] =
-      "MathJax.Hub.Config({\n" +
-      "  tex2jax: { inlineMath: [['$','$'], ['\\\\(','\\\\)']] }\n" +
-      "});";
-    head.appendChild(script);
-    script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML";
-    head.appendChild(script);
-
-    // script = document.createElement("script");
-    // script.type = "text/javascript";
-    // script[(window.opera ? "innerHTML" : "text")] =
-    //   'MathJax.Hub.Queue(["Typeset",MathJax.Hub]);\n' +
-    //   'MathJax.Hub.Queue(["Typeset",MathJax.Hub]);';
-    // head.appendChild(script);
-    //window.MathJax.Hub.Queue(["Typeset",MathJax.Hub])
-    }
+}
 
   render() {
     if (this.state.loaded) {
       const post = this.state.post;
 
+      //----------------------------------------Parse post for math
+      let body = post.body.split(/<math>|<\/math>/g);
+      let newBody = [];
+      if (body.length > 1){
+        // clean string segments
+        
+        for(let str of body){
+
+          //clean tags
+          let newstr = str;
+          let end = newstr.match(/^\s*<\/div>([\s\S]*)/);
+          let type = 0;
+          if (end != null){
+            newstr = end[1];
+            type = 1;
+          }
+          let begin = str.match(/([\s\S]*)<div>\s*$/);
+          if (begin != null){
+            newstr = begin[1];
+            type = 1;
+          }
+
+          //add strings to newbody
+          newBody.push({string:newstr,type:type});
+        }
+      } else {
+        newBody = [{string:body, type:1}]
+      }
+      let elements = [];
+      let key = 0;
+      for (let segment of newBody) {
+          if (segment.type) {
+            elements.push(<div key={key}dangerouslySetInnerHTML={{__html:segment.string}}/>);
+            key += 1;
+          } else {
+            elements.push(
+              <MathJax.Context key={key} input={'tex'}>
+                <MathJax.Node>{segment.string}</MathJax.Node>
+              </MathJax.Context>
+              );
+            key += 1;
+          }
+      }
+
       return (
-        <div>
+        <div style={{backgroundColor:'#FFFEF4'}} stye={{minHeight:'50em'}}>
           <Helmet>
             <title>{post.seo_title}</title>
             <meta name="description" content={post.meta_description} />
             <meta name="og:image" content={post.featured_image} />
           </Helmet>
-          <Banner style={{backgroundSize:'100em', backgroundRepeat:'repeat', textAlign:'center',opacity:'0.9'}} image={post.featured_image}>{post.title}</Banner>
-          <h1>{post.title}</h1>
-          <div dangerouslySetInnerHTML={{__html: post.body}} />
+          <div className="container-fluid" style={{minHeight:'50em'}} >
+            <div style={{textAlign:'center', padding:'7em'}}>
+              <h1 className="box-title-2" style={{color:'#333333', display: 'inline'}}>{post.title}</h1>
+            </div>
+            <Banner style={{
+                backgroundSize:'100em', 
+                backgroundRepeat:'repeat', 
+                textAlign:'center',opacity:'0.9', 
+                marginBottom:'10em',height:'12em',
+                borderWidth:'0em 0em 0em 0em'
+              }} image={post.featured_image}
+            ></Banner>
+            <div className="row">
+              <div className="col-sm-3"/>
+              <div className="col-sm-6" >
+                {elements.map((element, i)=>(element))}
+              </div>
+              <div className="col-sm-3"/>
+            </div>
+          </div>
           <Footer/>
         </div>
       );
     } else {
       return (
         <div>
-          Loading...
+          <div style={{minHeight:'50em', textAlign:'center'}}>
+            <h1 className="box-title-2" style={{color:'#333333', display: 'inline'}}>
+              Loading...
+            </h1>   
+          </div>
           <Footer/>
         </div>
       );
