@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Butter from 'buttercms';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
@@ -59,28 +59,44 @@ class Home extends Component {
 
         this.state = {
             loaded: false,
-            page: this.props.match.params.page
+            page: this.props.match.params.page,
+            status: 200
         };
         this.page = this.props.match.params.page;
+        console.log(this.page);
     }
     fetchPosts(page) {
-        butter.post.list({page: page, page_size: 2}).then((resp) => {
+        console.log(typeof page)
+        //console.log(page.match(/[^0-9]+/))
+        butter.post.list({page: page, page_size: 1}).then((resp) => {
+            console.log(resp);
             this.setState({
                 loaded: true,
                 resp: resp.data
             })
+        }).catch((resp) => {
+            console.log(resp);
+            switch(resp.status) {
+                case 404:
+                    this.setState({status:404});
+                    console.log(this.props)
+                    this.props.history.replace('/404');
+                    break;
+            }
         });
+
+        
 
     }
     componentWillMount() {
         //console.log('start: ' + this.props.match.params.page);
         if(isNaN(this.props.match.params.page)){
-            this.fetchPosts(1);
+            this.props.history.replace('/p/1');
         } else {
         let page = this.props.match.params.page || 1;    
             this.fetchPosts(page);
         }
-    }
+            }
 
     componentWillReceiveProps(nextProps) {
         this.setState({loaded: false, page:this.page});

@@ -89,7 +89,7 @@ class App extends Component {
                         <Redirect exact from="/" to="/p/1"/>
                         <ScrollToTopRoute path="/pages/hydrogenAtom" component={HydrogenAtom} />
                         <ScrollToTopRoute path="/post/:slug" component={BlogPost} />
-                        <ScrollToTopRoute component={NotFound} />
+                        <ScrollToTopRoute path ="/404" component={NotFound} />
                     </Switch>
                 </Fragment>
             </Router>

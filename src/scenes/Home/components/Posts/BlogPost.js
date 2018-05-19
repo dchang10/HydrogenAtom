@@ -25,7 +25,16 @@ class BlogPost extends Component {
         loaded: true,
         post: resp.data.data
       })
-    });
+    }).catch((resp) => {
+            console.log(resp);
+            switch(resp.status) {
+                case 404:
+                    this.setState({status:404});
+                    console.log(this.props)
+                    this.props.history.push('/404');
+                    break;
+            }
+        });
 }
 
   render() {
