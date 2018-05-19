@@ -8,7 +8,7 @@ import Login from './scenes/Login/components/Login';
 import BlogPost from './scenes/Home/components/Posts/BlogPost';
 import NotFound from './scenes/Home/components/NotFound';
 
-
+// ------------------------------------TODO incorporate this later
 const routes = [
     {
         path:"/",
@@ -32,7 +32,7 @@ const routes = [
 
     }
 ];
-
+// -------------------------------------------------------------
 class NavigationBar extends Component{
     render(){
         return(

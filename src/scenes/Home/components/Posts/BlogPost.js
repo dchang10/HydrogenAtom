@@ -33,6 +33,8 @@ class BlogPost extends Component {
                     console.log(this.props)
                     this.props.history.push('/404');
                     break;
+                default :
+                	break;
             }
         });
 }

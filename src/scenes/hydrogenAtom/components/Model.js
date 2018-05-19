@@ -292,7 +292,7 @@ export default class Model extends React.Component{
     render() {
         return(
             <div id='model-container' ref={(mount)=>{this.mount=mount}} className={this.props.className} style={{lineHeight:0}}>
-                <canvas id='my-canvas' canvas resize={true}/>
+                <canvas id='my-canvas' canvas="true" resize="true"/>
             </div>
 
           );

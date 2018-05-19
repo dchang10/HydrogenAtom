@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Butter from 'buttercms';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
@@ -81,6 +81,8 @@ class Home extends Component {
                     this.setState({status:404});
                     console.log(this.props)
                     this.props.history.replace('/404');
+                    break;
+                default :
                     break;
             }
         });
