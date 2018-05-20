@@ -122,11 +122,20 @@ img {
   border-style: solid hidden hidden hidden;
   border-width:5px
 }
+#git {
+    color: #FFFFFF;
+}
 #git:hover{
   color:#AC2B37
 }
+#linkedIn {
+    color:#FFFFFF;
+}
 #linkedIn:hover{
   color:#AC2B37
+}
+#piedPiper {
+    color:#FFFFFF;
 }
 #piedPiper:hover{
   color:#AC2B37

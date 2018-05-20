@@ -13,13 +13,13 @@ export default function Footer(){
                 <div className="col-sm-2" >
                     <div style={{width:'12em'}}>
                         <a href='https://github.com/dchang10'>
-                            <FontAwesomeIcon id="git" icon={brands.faGithub} style={{height:"2em",width:"3.5em", color:'white'}} href='https://github.com/dchang10'/>
+                            <FontAwesomeIcon id="git" icon={brands.faGithub} style={{height:"2em",width:"3.5em"}} href='https://github.com/dchang10'/>
                         </a>
                         <a href='https://www.linkedin.com/in/dominic-chang-9382a1b7/'>
-                            <FontAwesomeIcon id="linkedIn" icon={brands.faLinkedinIn} style={{height:"2em",width:"3.5em", color:'white'}}/>
+                            <FontAwesomeIcon id="linkedIn" icon={brands.faLinkedinIn} style={{height:"2em",width:"3.5em"}}/>
                         </a>
                         <a href='http://www.piedpiper.com/'>
-                            <FontAwesomeIcon id="piedPiper" icon={brands.faPiedPiperPp} style={{height:"2em",width:"3.5em", color:'white'}}/>
+                            <FontAwesomeIcon id="piedPiper" icon={brands.faPiedPiperPp} style={{height:"2em",width:"3.5em"}}/>
                         </a>
                     </div>
                 </div>
