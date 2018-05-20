@@ -123,7 +123,7 @@ class BlogPost extends Component {
               <div className="col-sm-3"/>
             </div>
             <Banner style={{
-                backgroundSize:'100em', 
+                backgroundSize:'100%', 
                 backgroundRepeat:'repeat', 
                 textAlign:'center',opacity:'0.9', 
                 marginBottom:'10em',height:'12em',

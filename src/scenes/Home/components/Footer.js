@@ -10,9 +10,18 @@ export default function Footer(){
     return(
         <footer id="my-footer" className="container-fluid " style={{backgroundColor:'#212529', color:'white', borderStyle:'hidden'}}>
             <div className="row card-footer justify-content-between" style={{height:'10em'}}>
-                <div className="col-sm-2" style={{textAlign:'center'}}>
-                        <FontAwesomeIcon id="git" icon={brands.faGithub}  style={{height:"2em",width:"3.5em"}}/>
-                        <FontAwesomeIcon id="linkedIn" icon={brands.faLinkedinIn} style={{height:"2em",width:"3.5em"}}/>
+                <div className="col-sm-2" >
+                    <div style={{width:'12em'}}>
+                        <a href='https://github.com/dchang10'>
+                            <FontAwesomeIcon id="git" icon={brands.faGithub} style={{height:"2em",width:"3.5em", color:'white'}} href='https://github.com/dchang10'/>
+                        </a>
+                        <a href='https://www.linkedin.com/in/dominic-chang-9382a1b7/'>
+                            <FontAwesomeIcon id="linkedIn" icon={brands.faLinkedinIn} style={{height:"2em",width:"3.5em", color:'white'}}/>
+                        </a>
+                        <a href='http://www.piedpiper.com/'>
+                            <FontAwesomeIcon id="piedPiper" icon={brands.faPiedPiperPp} style={{height:"2em",width:"3.5em", color:'white'}}/>
+                        </a>
+                    </div>
                 </div>
                 <div className="col-sm-2" style={{textAlign:'center'}}>
                     <a href="https://buttercms.com/">

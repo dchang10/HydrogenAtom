@@ -43,7 +43,7 @@ class NavigationBar extends Component{
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                <h4  style={{marginBottom:'0em', color:'#AC2B37' }}>PH</h4>
+                <h4  style={{marginBottom:'0em', color:'#AC2B37' }}>Physics</h4>
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
                     <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li className="nav-item">
