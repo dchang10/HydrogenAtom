@@ -63,23 +63,18 @@ class Home extends Component {
             status: 200
         };
         this.page = this.props.match.params.page;
-        console.log(this.page);
     }
     fetchPosts(page) {
-        console.log(typeof page)
         //console.log(page.match(/[^0-9]+/))
         butter.post.list({page: page, page_size: 1}).then((resp) => {
-            console.log(resp);
             this.setState({
                 loaded: true,
                 resp: resp.data
             })
         }).catch((resp) => {
-            console.log(resp);
             switch(resp.status) {
                 case 404:
                     this.setState({status:404});
-                    console.log(this.props)
                     this.props.history.replace('/404');
                     break;
                 default :

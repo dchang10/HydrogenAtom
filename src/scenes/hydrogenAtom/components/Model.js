@@ -82,7 +82,6 @@ export default class Model extends React.Component{
     }
     componentDidMount(){
 
-        console.log('orbital viewer mounted');
         this.orbitalRenderer = new THREE.WebGLRenderer({canvas:document.getElementById('my-canvas'), resize:true});
         let w = $('#model-container').width();
         let h = $('#model-container').height();
@@ -187,7 +186,6 @@ export default class Model extends React.Component{
     }
 
     componentWillUnmount() {
-        console.log("Removing event listeners");
         window.removeEventListener('resize',this.onResize);
         return;
 
