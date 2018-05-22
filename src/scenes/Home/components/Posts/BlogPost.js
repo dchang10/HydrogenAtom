@@ -80,7 +80,7 @@ class BlogPost extends Component {
           } else {
             elements.push(
               <MathJax.Context key={key} input={'tex'}>
-                <MathJax.Node>{segment.string}</MathJax.Node>
+                <MathJax.Node>{segment.string.replace(/&amp;/gi,'&')}</MathJax.Node>
               </MathJax.Context>
               );
             key += 1;
