@@ -17,6 +17,9 @@ h2 {
 h3 {
     font-family: 'Zilla Slab', serif;
 }
+h4 {
+    font-family: 'Zilla Slab', serif;
+}
 
 p {
     text-align: left;
@@ -42,7 +45,7 @@ img {
    background-color: white;
    margin-top: 1em;
    padding: 1em;
-   box-shadow: 0 0em 0.8em 0 rgba(0, 0, 0, 0.3);
+   /*box-shadow: 0 0em 0.8em 0 rgba(0, 0, 0, 0.3);*/
 }
 .box-title {
     border-style: solid solid solid solid;

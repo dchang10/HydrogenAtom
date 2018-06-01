@@ -107,7 +107,7 @@ class BlogPost extends Component {
       date[1] = months[date[1]];
 
       return (
-        <div style={{backgroundColor:'#FFFEF4'}} stye={{minHeight:'50em'}}>
+        <div stye={{minHeight:'50em'}}>
           <Helmet>
             <title>{post.seo_title}</title>
             <meta name="description" content={post.meta_description} />
@@ -116,7 +116,7 @@ class BlogPost extends Component {
           <div className="container-fluid" style={{minHeight:'50em'}} >
             <div className="row">
               <div className="col-sm-3"/>
-              <div className="col-sm-6" style={{textAlign:'center', paddingTop:'7em', paddingBottom:'7em'}}>
+              <div className="col-sm-6" style={{textAlign:'center', paddingTop:'7em', paddingBottom:'3em'}}>
                 <h1 className="box-title-2" style={{color:'#333333', display: 'inline'}}>{post.title}</h1>
                 <p style={{textAlign:'center'}}>{'Posted on ' + date[1] + ' ' + date[2] + ', ' + date[0]}</p>
               </div>
@@ -126,13 +126,14 @@ class BlogPost extends Component {
                 backgroundSize:'100%', 
                 backgroundRepeat:'repeat', 
                 textAlign:'center',opacity:'0.9', 
-                marginBottom:'10em',height:'12em',
+                marginBottom:'1em',height:'12em',
                 borderWidth:'0em 0em 0em 0em'
               }} image={post.featured_image}
             ></Banner>
             <div className="row">
               <div className="col-sm-3"/>
               <div className="col-sm-6" >
+              <h4 style={{paddingBottom:'2em',color:'#333333',textAlign:'center'}}>{post.summary}</h4>
                 {elements.map((element, i)=>(element))}
               </div>
               <div className="col-sm-3"/>
