@@ -35,15 +35,15 @@ class BlogCard extends Component {
     }
     render(){
         return(
-            <div className='card' style={{height:'25em'}}>
+            <div className='card' style={{height:'36em'}}>
                 <Link to={`/post/${this.props.slug}`} >
                     <div style={{height:'10em',backgroundSize:'35em',backgroundPosition:'50% 50%', backgroundRepeat:'no-repeat', textAlign:'center', backgroundImage:`url(${this.props.image})`}}>
                     </div>
-                    <h2 style={{paddingTop:'0.5em', textAlign:'center'}}>
+                    <h2 style={{paddingTop:'0.5em', textAlign:'center',height:'5em'}}>
                         {this.props.title}
                     </h2>
                     <hr/>
-                    <p style={{height:'5em', color:'grey'}}>
+                    <p style={{height:'10em', color:'grey'}}>
                         {this.props.summary}
                     </p>
                     <p style={{textAlign:"right", color:'black'}}>{this.date[1] + ' ' + this.date[2] + ', ' + this.date[0]}</p>
@@ -66,7 +66,7 @@ class Home extends Component {
     }
     fetchPosts(page) {
         //console.log(page.match(/[^0-9]+/))
-        butter.post.list({page: page, page_size: 5}).then((resp) => {
+        butter.post.list({page: page, page_size: 6}).then((resp) => {
             this.setState({
                 loaded: true,
                 resp: resp.data
@@ -115,25 +115,27 @@ class Home extends Component {
             <Fragment>
                 <div className="container-fluid" >
                     <Banner image={FeynmanDiagram}>Physics Blog</Banner>
-                    <div className="row" style={{boxShadow:'0px 0px 10em 10em rgba(0,0,0,0.4)',zIndex:'2', minHeight:'40em'}}>
-                        <div className='col-sm-2' style={{backgroundColor:'#eeeeee'}}/>
-                        <div className='col-sm-8' style={{backgroundColor:'#eeeeee'}}>
+                    <div className="row" style={{boxShadow:'0px 0px 10em 10em rgba(0,0,0,0.4)',zIndex:'2', height:'40em'}}>
+                        <div className='col-lg-2' style={{backgroundColor:'#eeeeee'}}/>
+                        <div className='col-lg-8' style={{backgroundColor:'#eeeeee'}}>
                             <div className='row'>
                                 {this.state.resp.data.map((post) => {
-                                    return(<div className='col-sm-4' key={post.slug} style={{height:'40em'}}>
+                                    return(<div className='col-lg-4' key={post.slug} style={{minHeight:'30em'}}>
                                         <BlogCard title={post.title} summary={post.summary} image={post.featured_image} slug={post.slug} published={post.published}/>
                                     </div>);
                                 })}
                             </div>
                         </div>
-                        <div className='col-sm-2' style={{backgroundColor:'#eeeeee'}}/>
-                        <div className="col-sm-12" style={{backgroundColor:'#eeeeee', textAlign:'center'}}>
+                        <div className='col-lg-2' style={{backgroundColor:'#eeeeee'}}/>
+                        <div className="col-lg-12" style={{backgroundColor:'#eeeeee', textAlign:'center'}}>
                             {n_page}
                             {p_page}
                         </div>
+                        <Footer/>
+
                     </div>
                 </div>
-                <Footer/>
+
             </Fragment>
             );
         } else {

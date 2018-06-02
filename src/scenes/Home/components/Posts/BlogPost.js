@@ -79,7 +79,10 @@ class BlogPost extends Component {
             key += 1;
           } else {
             elements.push(
-              <MathJax.Context key={key} input={'tex'}>
+              <MathJax.Context key={key} input={'tex'} options={{
+                "CommonHTML": { scale: 100,linebreaks: { automatic: true, width: "90%container" } }, 
+                "SVG": { scale: 100,linebreaks: { automatic: true, width: "90% container" } } 
+              }}>
                 <MathJax.Node>{segment.string.replace(/&amp;/gi,'&')}</MathJax.Node>
               </MathJax.Context>
               );
@@ -107,7 +110,7 @@ class BlogPost extends Component {
       date[1] = months[date[1]];
 
       return (
-        <div stye={{minHeight:'50em'}}>
+        <div style={{minHeight:'50em'}}>
           <Helmet>
             <title>{post.seo_title}</title>
             <meta name="description" content={post.meta_description} />
@@ -115,31 +118,34 @@ class BlogPost extends Component {
           </Helmet>
           <div className="container-fluid" style={{minHeight:'50em'}} >
             <div className="row">
-              <div className="col-sm-3"/>
-              <div className="col-sm-6" style={{textAlign:'center', paddingTop:'7em', paddingBottom:'3em'}}>
+              <div className="col-lg-3"/>
+              <div className="col-lg-6" style={{textAlign:'center', paddingTop:'7em', paddingBottom:'3em'}}>
                 <h1 className="box-title-2" style={{color:'#333333', display: 'inline'}}>{post.title}</h1>
                 <p style={{textAlign:'center'}}>{'Posted on ' + date[1] + ' ' + date[2] + ', ' + date[0]}</p>
               </div>
-              <div className="col-sm-3"/>
+              <div className="col-lg-3"/>
             </div>
             <Banner style={{
-                backgroundSize:'100%', 
-                backgroundRepeat:'repeat', 
+                backgroundSize:'120em', 
+                backgroundRepeat:'no-repeat', 
                 textAlign:'center',opacity:'0.9', 
-                marginBottom:'1em',height:'12em',
-                borderWidth:'0em 0em 0em 0em'
+                marginBottom:'1em',
+                borderWidth:'0em 0em 0em 0em',
+                height:'18em'
               }} image={post.featured_image}
             ></Banner>
             <div className="row">
-              <div className="col-sm-3"/>
-              <div className="col-sm-6" >
+              <div className="col-lg-3"/>
+              <div className="col-lg-6" >
               <h4 style={{paddingBottom:'2em',color:'#333333',textAlign:'center'}}>{post.summary}</h4>
                 {elements.map((element, i)=>(element))}
               </div>
-              <div className="col-sm-3"/>
+              <div className="col-lg-3"/>
+              <Footer/>
             </div>
+
           </div>
-          <Footer/>
+          
         </div>
       );
     } else {

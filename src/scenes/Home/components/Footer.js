@@ -8,10 +8,9 @@ import brands from '@fortawesome/fontawesome-free-brands';
 
 export default function Footer(){
     return(
-        <footer id="my-footer" className="container-fluid " style={{backgroundColor:'#212529', color:'white', borderStyle:'hidden'}}>
-            <div className="row card-footer justify-content-between" style={{height:'10em'}}>
-                <div className="col-sm-2" >
-                    <div style={{width:'12em'}}>
+        <footer id="my-footer" className="page-footer col-sm-12" style={{backgroundColor:'#212529', color:'white', borderStyle:'hidden'}}>
+            <div className="row card-footer" style={{height:'10em', textAlign:'center'}}>
+                <div className="col-sm-3">
                         <a href='https://github.com/dchang10'>
                             <FontAwesomeIcon id="git" icon={brands.faGithub} style={{height:"2em",width:"3.5em"}} href='https://github.com/dchang10'/>
                         </a>
@@ -21,11 +20,11 @@ export default function Footer(){
                         <a href='http://www.piedpiper.com/'>
                             <FontAwesomeIcon id="piedPiper" icon={brands.faPiedPiperPp} style={{height:"2em",width:"3.5em"}}/>
                         </a>
-                    </div>
                 </div>
-                <div className="col-sm-2" style={{textAlign:'center'}}>
+                <div className="col-sm-6"/>
+                <div className="col-sm-3">
                     <a href="https://buttercms.com/">
-                        <img style={{align:'right',paddingTop:'0.2em'}} className="logo" src={`${butterlogo}`} height="25" alt='Link to ButterCMS'/>
+                        <img style={{align:'center',paddingTop:'0.2em'}} className="logo" src={`${butterlogo}`} height="25" alt='Link to ButterCMS'/>
                     </a>
                 </div>
             </div>
