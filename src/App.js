@@ -52,6 +52,9 @@ class NavigationBar extends Component{
                         <li className="nav-item">
                             <Link className="nav-link" to="/pages/hydrogenAtom" style={{padding:'1em 0em 1em 1em'}}>Hydrogen Atom</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/pages/Login" style={{padding:'1em 0em 1em 1em'}}>Login</Link>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -88,6 +91,7 @@ class App extends Component {
                         <ScrollToTopRoute path="/p/:page" component={Home} />
                         <Redirect exact from="/" to="/p/1"/>
                         <ScrollToTopRoute path="/pages/hydrogenAtom" component={HydrogenAtom} />
+                        <ScrollToTopRoute path="/pages/Login" component={Login} />
                         <ScrollToTopRoute path="/post/:slug" component={BlogPost} />
                         <ScrollToTopRoute path ="/404" component={NotFound} />
                     </Switch>

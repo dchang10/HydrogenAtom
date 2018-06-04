@@ -126,12 +126,12 @@ class BlogPost extends Component {
               <div className="col-lg-3"/>
             </div>
             <Banner style={{
-                backgroundSize:'120em', 
+                backgroundSize:'120%', 
                 backgroundRepeat:'no-repeat', 
                 textAlign:'center',opacity:'0.9', 
                 marginBottom:'1em',
                 borderWidth:'0em 0em 0em 0em',
-                height:'18em'
+                height:'12em'
               }} image={post.featured_image}
             ></Banner>
             <div className="row">

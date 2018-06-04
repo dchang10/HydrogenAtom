@@ -35,15 +35,15 @@ class BlogCard extends Component {
     }
     render(){
         return(
-            <div className='card' style={{height:'36em'}}>
+            <div className='card' style={{height:'32em'}}>
                 <Link to={`/post/${this.props.slug}`} >
                     <div style={{height:'10em',backgroundSize:'35em',backgroundPosition:'50% 50%', backgroundRepeat:'no-repeat', textAlign:'center', backgroundImage:`url(${this.props.image})`}}>
                     </div>
-                    <h2 style={{paddingTop:'0.5em', textAlign:'center',height:'5em'}}>
+                    <h3 style={{color:'black', paddingTop:'0.5em', textAlign:'center',height:'4em'}}>
                         {this.props.title}
-                    </h2>
+                    </h3>
                     <hr/>
-                    <p style={{height:'10em', color:'grey'}}>
+                    <p style={{height:'9em', color:'grey'}}>
                         {this.props.summary}
                     </p>
                     <p style={{textAlign:"right", color:'black'}}>{this.date[1] + ' ' + this.date[2] + ', ' + this.date[0]}</p>
@@ -115,7 +115,7 @@ class Home extends Component {
             <Fragment>
                 <div className="container-fluid" >
                     <Banner image={FeynmanDiagram}>Physics Blog</Banner>
-                    <div className="row" style={{boxShadow:'0px 0px 10em 10em rgba(0,0,0,0.4)',zIndex:'2', height:'40em'}}>
+                    <div className="row" style={{zIndex:'2', height:'40em'}}>
                         <div className='col-lg-2' style={{backgroundColor:'#eeeeee'}}/>
                         <div className='col-lg-8' style={{backgroundColor:'#eeeeee'}}>
                             <div className='row'>
