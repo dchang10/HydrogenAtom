@@ -1,20 +1,3 @@
-/**
- * Copyright (c) 2013-present, Facebook, Inc. All rights reserved.
- *
- * This file provided by Facebook is for non-commercial testing and evaluation
- * purposes only. Facebook reserves all rights not expressly granted.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
-
-'use strict';
-
-import katex from 'katex';
 import React from 'react';
 import MathJax from 'react-mathjax2';
 
@@ -76,7 +59,12 @@ class MathJaxOutput extends React.Component {
 export default class TeXBlock extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {editMode: false};
+    const contentState = this.props.contentState;
+    const entity = this.props.block.getEntityAt(0);
+    this.state = {
+      editMode: false,
+      caption:contentState.getEntity(entity).getData()['caption']
+    };
 
     this._onClick = () => {
       if (this.state.editMode) {
@@ -86,26 +74,34 @@ export default class TeXBlock extends React.Component {
       this.setState({
         editMode: true,
         texValue: this._getValue(),
+        caption: contentState.getEntity(entity).getData()['caption'], 
       }, () => {
         this._startEdit();
       });
     };
 
-    this._onValueChange = evt => {
-      var value = evt.target.value;
+    this._onValueChangeTex = evt => {
+      let value = evt.target.value;
       var invalid = false;
       this.setState({
         invalidTeX: invalid,
         texValue: value,
       });
-      
     };
+
+    this._onValueChangeCaption = evt => {
+      let value = evt.target.value;
+      this.setState({caption: value,});
+    }
 
     this._save = () => {
       var entityKey = this.props.block.getEntityAt(0);
       var newContentState = this.props.contentState.mergeEntityData(
         entityKey,
-        {content: this.state.texValue},
+        {
+          content: this.state.texValue,
+          caption: this.state.caption,
+        },
       );
       this.setState({
         invalidTeX: false,
@@ -162,9 +158,15 @@ export default class TeXBlock extends React.Component {
         <div className="TeXEditor-panel">
           <textarea
             className="TeXEditor-texValue"
-            onChange={this._onValueChange}
-            ref="textarea"
+            onChange={this._onValueChangeTex}
+            ref="TeX"
             value={this.state.texValue}
+          />
+          <textarea
+            className="TeXEditor-caption"
+            onChange={this._onValueChangeCaption}
+            ref="caption"
+            value={this.state.caption}
           />
           <div className="TeXEditor-buttons">
             <button
@@ -182,7 +184,10 @@ export default class TeXBlock extends React.Component {
 
     return (
       <div className={className}>
-        <MathJaxOutput content={texContent} onClick={this._onClick} />
+        <figure>
+          <MathJaxOutput content={texContent} onClick={this._onClick} />
+          <figcaption>{this.state.caption}</figcaption>
+        </figure>
         {editPanel}
       </div>
     );

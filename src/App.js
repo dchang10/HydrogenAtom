@@ -7,6 +7,8 @@ import Home from './scenes/Home/components/Home';
 import Login from './scenes/Login/components/Login';
 import BlogPost from './scenes/Home/components/Posts/BlogPost';
 import NotFound from './scenes/Home/components/NotFound';
+import './App.css';
+
 
 // ------------------------------------TODO incorporate this later
 const routes = [

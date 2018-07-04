@@ -8,6 +8,8 @@ import FeynmanDiagram from '../images/Feynmandiagram.svg';
 import Banner from './Banner.js';
 import Footer from './Footer.js';
 
+import blogAPI from '../../../api/blog-api.js';
+
 const butter = Butter('cc7eb55c33094b691f4f9454c0b3e19c354c214a');
 
 
@@ -28,9 +30,9 @@ class BlogCard extends Component {
             '11':'November',
             '12':'December'
             }
-        this.date = this.props.published.split("-");
-        this.date[2] = this.date[2].slice(0,2);
-        this.date[1] = months[this.date[1]]
+        this.date = this.props.published;
+        //this.date[2] = this.date[2].slice(0,2);
+        //this.date[1] = months[this.date[1]]
 
     }
     render(){
@@ -46,7 +48,7 @@ class BlogCard extends Component {
                     <p style={{height:'9em', color:'grey'}}>
                         {this.props.summary}
                     </p>
-                    <p style={{textAlign:"right", color:'black'}}>{this.date[1] + ' ' + this.date[2] + ', ' + this.date[0]}</p>
+                    <p style={{textAlign:"right", color:'black'}}>{this.date.substring(0, 15)}</p>
                 </Link>
             </div>
         );
@@ -56,30 +58,23 @@ class BlogCard extends Component {
 class Home extends Component {
     constructor(props) {
         super(props);
+        let page = this.props.match.params.page;
 
         this.state = {
             loaded: false,
-            page: this.props.match.params.page,
+            page: page<1000000?(page>0?page:1):1000000,
             status: 200
         };
-        this.page = this.props.match.params.page;
+        this.page = this.state.page;
+
     }
     fetchPosts(page) {
-        //console.log(page.match(/[^0-9]+/))
-        butter.post.list({page: page, page_size: 6}).then((resp) => {
-            this.setState({
-                loaded: true,
-                resp: resp.data
+        blogAPI.getPages({page: page, page_size: 3}).then(
+            (resp) => {
+                this.setState({
+                    loaded: true, 
+                    resp: resp,
             })
-        }).catch((resp) => {
-            switch(resp.status) {
-                case 404:
-                    this.setState({status:404});
-                    this.props.history.replace('/404');
-                    break;
-                default :
-                    break;
-            }
         });
 
         
@@ -90,8 +85,7 @@ class Home extends Component {
         if(isNaN(this.props.match.params.page)){
             this.props.history.replace('/p/1');
         } else {
-        let page = this.props.match.params.page || 1;    
-            this.fetchPosts(page);
+            this.fetchPosts(this.page || 1);
         }
             }
 
@@ -107,8 +101,9 @@ class Home extends Component {
     render() {
 
         if (this.state.loaded) {
-            const { next_page, previous_page } = this.state.resp.meta;
-            let n_page = <span style={{padding:'2em', color:'grey'}}>{previous_page?<Link onClick={()=>{this.page=previous_page}} to={"/p/" + previous_page} style={{color:'blue'}}>← Newer Posts</Link>:"← Newer Posts"}</span>;
+            console.log(this.state.resp)
+            const { next_page, previous_page } = this.state.resp.data;
+            let n_page = <span style={{padding:'2em', color:'grey'}}>{previous_page ?<Link onClick={()=>{this.page=previous_page}} to={"/p/" + previous_page} style={{color:'blue'}}>← Newer Posts</Link>:"← Newer Posts"}</span>;
             let p_page = <span style={{padding:'2em', color:'grey'}}>{next_page?<Link onClick={()=>{this.page=next_page}}to={"/p/" + next_page} style={{color:'blue'}}>Older Posts →</Link>:"Older Posts →"}</span>;
 
             return(
@@ -119,7 +114,7 @@ class Home extends Component {
                         <div className='col-lg-2' style={{backgroundColor:'#eeeeee'}}/>
                         <div className='col-lg-8' style={{backgroundColor:'#eeeeee'}}>
                             <div className='row'>
-                                {this.state.resp.data.map((post) => {
+                                {this.state.resp.data.Items.map((post) => {
                                     return(<div className='col-lg-4' key={post.slug} style={{minHeight:'30em'}}>
                                         <BlogCard title={post.title} summary={post.summary} image={post.featured_image} slug={post.slug} published={post.published}/>
                                     </div>);
