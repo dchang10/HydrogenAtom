@@ -1,20 +1,19 @@
 import Draft from 'draft-js';
-import { Map } from 'immutable';
+import { Map, List, Repeat } from 'immutable';
 import React, { Component } from 'react';
 
 import TeXBlock from './TeXBlock';
+import TitleBlock from './TitleBlock';
 import {insertTeXBlock} from './modifiers/insertTeXBlock';
 import {removeTeXBlock} from './modifiers/removeTeXBlock';
 import {insertImageBlock} from './modifiers/insertImageBlock';
 import {removeImageBlock} from './modifiers/removeImageBlock';
 import {setTitle2}  from './modifiers/setTitle2';
-import CenterBlock from './CenterBlock'
 import Image from './Image';
-import { PostCode } from './post';
-import { GetCode } from './get';
 import blogAPI from '../api/blog-api';
+import './wysiwyg.css';
 
-var {Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } = Draft;
+var { Entity, CharacterMetadata, genKey, ContentBlock, ContentState, Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } = Draft;
 
 class StyleButton extends Component {
   constructor() {
@@ -124,8 +123,8 @@ class BlockStyleControls extends Component {
         style:{width:'2.5em', top:'8em', 
         left:'12em', position:'fixed'}
       },
-      { label: "custom", 
-        type: "center", 
+      { label: "drop", 
+        type: "drop-caps", 
         style:{width:'2.5em', top:'8em', left:'14em', position:'fixed'}
       }
 		];
@@ -152,10 +151,24 @@ class BlockStyleControls extends Component {
 
 export default class TeXEditor extends Component {
   constructor(props) {
+    let contentBlocksArray = ['Title'].map(word => {
+      return new ContentBlock({
+        key: genKey(),
+        type: 'unstyled',
+        characterList: new List(Repeat(CharacterMetadata.create(), word.length)),
+        text: word,
+        entity: Entity.create(      
+        'LINK',
+        'IMMUTABLE',
+      ) 
+      });
+    });    
+    let titleContent = ContentState.createFromBlockArray(contentBlocksArray);
 
     super(props);
     this.state = {
       save:false,
+      titleState: EditorState.createWithContent(titleContent),
       editorState: EditorState.createEmpty(),
       liveEdits: Map(),
       post:{
@@ -185,7 +198,7 @@ export default class TeXEditor extends Component {
     this._blockRenderer = (block) => {
     	var contentState = this.state.editorState.getCurrentContent();
     	var entityKey = block.getEntityAt(0);
-      if (block.getType() === 'atomic' ) {
+      if (block.getType() === 'atomic' ) { 
       	switch(contentState.getEntity(entityKey).getData()['type']) {
         case 'TeX':
 	        return {
@@ -228,16 +241,21 @@ export default class TeXEditor extends Component {
         default:
           return null;
 	      } 
-      } else if (block.getType() === 'title'){
-          return {
-            component: CenterBlock,
-          }
       }
       return null;
     };
 
     this._focus = () => this.refs.editor.focus();
     this._onChange = (editorState) => this.setState({editorState});
+    this._titleChange = (titleState) => {
+      let post = this.state.post;
+      post.title = titleState.getCurrentContent().getPlainText();
+      this.setState(
+      {
+        titleState:titleState,
+        post:post,
+      })
+    };
 
     this._handleKeyCommand = (command, editorState) => {
       var newState = RichUtils.handleKeyCommand(editorState, command);
@@ -278,7 +296,7 @@ export default class TeXEditor extends Component {
 
     this._setTitle2= () => {
     	this.setState({
-    		editorState: setTitle2(this.state.editorState),
+    		titleState: setTitle2(this.state.titleState),
     	});
     };
   
@@ -311,7 +329,7 @@ export default class TeXEditor extends Component {
         summary:this.refs.summary.value,
         seo_title:this.refs.seo_title.value,
         featured_image:this.refs.featured_image.value,
-        slug:this.refs.slug.value,
+        slug:this.refs.slug.value.split(' ').join('_'),
         published:this.refs.published.value,
         status:this.refs.status.value,
         number:'number',
@@ -323,12 +341,10 @@ export default class TeXEditor extends Component {
     }
 		this._getBlockStyle = (block) => {
 	  	switch (block.getType()) {
-	      case 'left':
-	          return 'align-left';
-	      case 'center':
+	      case 'header-one':
 	          return 'align-center';
-	      case 'right':
-	          return 'align-right';
+        case 'drop-caps':
+            return 'drop-caps';
 	      default:
 	          return null;
 	  	}   
@@ -350,7 +366,7 @@ export default class TeXEditor extends Component {
  		const unorderedListWrapper = <ul style={{maxWidth:'900px', margin:'auto'}} />
  		const orderedListWrapper = <ol style={{maxWidth:'900px', margin:'auto'}} />
   	const blockRenderMap = Map({
-      'center': {
+      'drop-caps': {
         element: 'div',
         wrapper: wrapper},
 		  'header-one': {
@@ -410,7 +426,7 @@ export default class TeXEditor extends Component {
     let modalStyle = {
         display: this.state.save?'block':'none',
         position: 'fixed', /* Stay in place */
-        zIndex: '1', /* Sit on top */
+        zIndex: '2', /* Sit on top */
         paddingTop: '100px', /* Location of the box */
         left: '0',
         top: '0',
@@ -420,6 +436,17 @@ export default class TeXEditor extends Component {
         backgroundColor: 'rgb(0,0,0)', /* Fallback color */
         backgroundColor: 'rgba(0,0,0,0.4)', /* Black w/ opacity */
       }
+      const styleMap = {
+        'title2': {
+          paddingLeft: '0.2em',
+          paddingRight: '0.2em',
+          borderLeftStyle: 'solid',
+          borderRightStyle: 'solid',
+          borderLeftWidth: '0.1em',
+          borderRightWidth: '0.1em',
+        },
+      };
+
     let savepanel = 
       <div ref="myModal" className="modal" style={modalStyle}>
         <div className="modal-content" style={{
@@ -505,7 +532,7 @@ export default class TeXEditor extends Component {
       </div>
 
     let controlpanel = null
-    if(this.props.readOnly == false) {
+    if(this.props.readOnly === false) {
       controlpanel = 
         <div>
           <BlockStyleControls
@@ -524,7 +551,7 @@ export default class TeXEditor extends Component {
             style={{left:'0', top:'12em', width:'6em', position:'fixed'}}
           /> 
           <StyleButton
-            label="Make Title"
+            label="Title Style"
             onToggle={this._setTitle2}
             style={{left:'6em', top:'12em', width:'10em', position:'fixed'}}
           />
@@ -536,22 +563,27 @@ export default class TeXEditor extends Component {
           /> 
           <StyleButton
             className="save"
-            label="save state"
+            label="Save state"
             onToggle={this._openSavePanel}
             style={{top:'8em', right:'0em', width:'6em', position:'fixed'}}/>
         </div>
     }
     return (
       <div>
+        <div style={{height:'3em'}}/>
+        <TitleBlock 
+          onChange={(titleState) =>{this._titleChange(titleState)}}
+          editorstate={this.state.titleState}
+          />
         <div className="TeXEditor-editor" onClick={this._focus} >
           <Editor
           	blockStyleFn={this._getBlockStyle}
+            customStyleMap={styleMap}
           	blockRenderMap={extendedBlockRenderMap}
             blockRendererFn={this._blockRenderer}
             editorState={this.state.editorState}
             handleKeyCommand={this._handleKeyCommand}
             onChange={this._onChange}
-            placeholder="Start a document..."
             readOnly={this.state.liveEdits.count() | this.props.readOnly}
             ref="editor"
             spellCheck={true}

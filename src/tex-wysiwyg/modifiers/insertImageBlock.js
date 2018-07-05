@@ -7,7 +7,14 @@ export function insertImageBlock(editorState) {
   	.createEntity(
     	'PHOTO',
 	    'IMMUTABLE',
-	    {content: logo, type: 'Image', caption:'caption'},
+	    {
+        content: logo, 
+        type: 'Image', 
+        caption:'caption',
+        height:'100',
+        width:'100',
+        keepAspectRatio: true,
+      },
   );
   const entityKey = contentState.getLastCreatedEntityKey();
   const newEditorState = EditorState.set(

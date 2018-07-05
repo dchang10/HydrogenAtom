@@ -28,21 +28,6 @@
 .App-intro {
   font-size: large;
 }
-.align-right div {
-    text-align: right;
-}
-.align-center div {
-  text-align: center;
-  background-color: cadetblue;
-  margin: 15px 0;
-  font-size: 16px;
-  position: relative;
-  padding-left: 4px;
-  border-left: 9px solid lightblue;
-}
-.align-left div {
-    text-align: left;
-}
 .editor-control {
   color: #999;
   cursor: pointer;

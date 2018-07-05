@@ -1,17 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import Butter from 'buttercms';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import '../../../css/blog.css';
 import FeynmanDiagram from '../images/Feynmandiagram.svg';
 import Banner from './Banner.js';
-import Footer from './Footer.js';
+import Footer from '../../../components/Footer.js';
 
 import blogAPI from '../../../api/blog-api.js';
-
-const butter = Butter('cc7eb55c33094b691f4f9454c0b3e19c354c214a');
-
 
 class BlogCard extends Component {
     constructor(props){

@@ -154,31 +154,60 @@ export default class TeXBlock extends React.Component {
         buttonClass += ' TeXEditor-invalidButton';
       }
 
+      let white = {color:'white'}
       editPanel =
         <div className="TeXEditor-panel">
-          <textarea
-            className="TeXEditor-texValue"
-            onChange={this._onValueChangeTex}
-            ref="TeX"
-            value={this.state.texValue}
-          />
-          <textarea
-            className="TeXEditor-caption"
-            onChange={this._onValueChangeCaption}
-            ref="caption"
-            value={this.state.caption}
-          />
-          <div className="TeXEditor-buttons">
-            <button
-              className={buttonClass}
-              disabled={this.state.invalidTeX}
-              onClick={this._save}>
-              {this.state.invalidTeX ? 'Invalid TeX' : 'Done'}
-            </button>
-            <button className="TeXEditor-removeButton" onClick={this._remove}>
-              Remove
-            </button>
-          </div>
+          <table align='center' style={{boxShadow: "0.5em 1em 1em 0 rgba(0, 0, 0, 0.5)", backgroundColor:'rgb(33, 37, 41)', width:'30em', height:'10em'}}>
+            <thead>
+              <tr>
+                <th style={white}>Tex</th>
+                <th style={white}>Caption</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th style={white}>
+                  <textarea
+                    className="TeXEditor-texValue"
+                    onChange={this._onValueChangeTex}
+                    ref="TeX"
+                    style={{ width:'100%'}}
+                    value={this.state.texValue}
+                  />
+                </th>
+                <th style={white}>
+                  <input
+                    className="TeXEditor-caption"
+                    onChange={this._onValueChangeCaption}
+                    ref="caption"
+                    style={{width:'100%'}} 
+                    value={this.state.caption}
+                  />
+                </th>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colSpan="2">
+                  <button
+                    className={buttonClass}
+                    disabled={this.state.invalidTeX}
+                    onClick={this._save}
+                    style={{borderLeft:'none', borderBottom:'none', backgroundColor:'rgb(33, 37, 41)', color:'white', width:'50%'}}
+                  >
+                    {this.state.invalidTeX ? 'Invalid TeX' : 'Done'}
+                  </button>
+                  <button 
+                    className="TeXEditor-removeButton" 
+                    onClick={this._remove}
+                    style={{borderRight:'none', borderBottom:'none', backgroundColor:'rgb(33, 37, 41)', color:'white', width:'50%'}}
+                  >
+                    Remove
+                  </button> 
+                </td>
+              </tr>
+            </tfoot>
+          </table>
         </div>;
     }
 

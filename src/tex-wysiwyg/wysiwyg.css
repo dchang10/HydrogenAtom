@@ -14,6 +14,7 @@
   color: white;
 }
 .title-2 {
+    text-align: center;
     padding-left: 0.1em;
     padding-right: 0.1em;
     border-left-style: solid;
@@ -28,17 +29,22 @@
 .App-intro {
   font-size: large;
 }
-.align-right div {
-    text-align: right;
-}
-.align-center div {
+.align-center {
   text-align: center;
-  background-color: cadetblue;
-  margin: 15px 0;
-  font-size: 16px;
-  position: relative;
-  padding-left: 4px;
-  border-left: 9px solid lightblue;
+}
+.drop-caps {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: #000;
+}
+.drop-caps :first-child:first-letter {
+  color: rgb(172, 43, 55);
+  float: left;
+  font-size: 75px;
+  line-height: 60px;
+  padding-top: 4px;
+  padding-right: 8px;
+  padding-left: 3px;
 }
 .align-left div {
     text-align: left;

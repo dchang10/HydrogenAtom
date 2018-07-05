@@ -121,7 +121,7 @@ img {
 }
 #my-footer {
   background-color: #dddddd;
-  z-index : 100000;
+  z-index : 1;
   border-style: solid hidden hidden hidden;
   border-width:5px
 }
