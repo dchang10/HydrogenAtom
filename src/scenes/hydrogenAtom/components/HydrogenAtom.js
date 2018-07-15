@@ -8,7 +8,6 @@ import ControlPanel from './ControlPanel.js';
 import * as  WaveFunctions from './WaveFunction';
 import '../css/hydrogen.css';
 import atom from '../images/atom.svg';
-import Footer from './Footer.js';
 
 function Banner(){
     return(
@@ -202,7 +201,6 @@ class HydrogenAtom extends Component {
                     <SchrodingerInfo/>
                     <OrbitalView/>
                 </div>
-            <Footer/>
             </Fragment>
         );
   }

@@ -1,7 +1,7 @@
 import https from 'https';
 
 export default class blogAPI {
-	static post(post){
+	static post(post, username, password){
 	  // Build the post string from an object
 	  let neededProps = new Set(
 	  	['slug', 
@@ -37,6 +37,8 @@ export default class blogAPI {
       number : post.number
     });
 
+    let credentials = Buffer.from(username + ":" + password).toString('base64');
+
 	  // An object of options to indicate where to post to
 	  var post_options = {
       host: 'vs259jn8d5.execute-api.us-east-2.amazonaws.com',
@@ -46,7 +48,8 @@ export default class blogAPI {
       port: '443',
       headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'Content-Length': Buffer.byteLength(post_data)
+          'Content-Length': Buffer.byteLength(post_data),
+          'Authorization': 'Basic ' + credentials,
       },
 	  };
 
@@ -73,8 +76,20 @@ export default class blogAPI {
 	  // Set up the request
 	  let wait = true;
 	  let get_req = {data:null};
-	  https.get(
-	    'https://vs259jn8d5.execute-api.us-east-2.amazonaws.com/latest/pages?per_page=' + req.page_size + '&page=' + req.page, 
+
+	  var request_options = {
+      host: 'vs259jn8d5.execute-api.us-east-2.amazonaws.com',
+      
+      path: '/latest/pages?per_page=' + req.page_size + '&page=' + req.page,
+      method: 'GET',
+      port: '443',
+      headers: {
+      		'Authorization': 'Basic RG9jaGFuZzpzY2llbnRpc3QxMg==',
+      },
+	  };
+
+	  const request = https.request(
+	    request_options, 
 	    (res) => {
 	      res.setEncoding('utf8');
 	      res.on('data', function (chunk) {
@@ -83,6 +98,11 @@ export default class blogAPI {
 	      });
 	  	}
 	  );
+
+	  request.on('error', (e) => {
+	  	console.error(e);
+	  })
+	  request.end();
 	  while( wait ) {
 	    await this.sleep(200);
 	  }
@@ -112,12 +132,14 @@ export default class blogAPI {
 	}
 	//---------------------------------------------------------
 
-	static deletePost(slug) {
+	static deletePost(slug, username, password) {
+		let credentials = Buffer.from(username + ':' + password).toString('base64');
 		let delete_options = {
       host: 'vs259jn8d5.execute-api.us-east-2.amazonaws.com',
      	port: '443', 
       path: '/latest/posts/' + slug,
-      method: 'DELETE',
+			method: 'DELETE',
+			Authorization: 'Basic ' + credentials,
 	  }; 
 
 		let req = https.request(delete_options, (res) => {
@@ -127,5 +149,49 @@ export default class blogAPI {
       });
 	  });
 	  req.end();
+	}
+//------------------------------------------------------------
+
+	static async authenticate(username, password) {
+	  // Set up the request
+	  let wait = true;
+	  let get_req = {data:null};
+
+	  let credentials = Buffer.from(username + ':' + password).toString('base64');
+
+	  var request_options = {
+      host: 'vs259jn8d5.execute-api.us-east-2.amazonaws.com',
+      
+      path: '/latest/Login',
+      method: 'GET',
+      port: '443',
+      headers: {
+      		'Authorization': 'Basic ' + credentials,
+      },
+	  };
+
+	  let statusCode = 401;
+	  const request = https.request(
+	    request_options, 
+	    (res) => {
+	    	statusCode = res.statusCode;
+	      res.setEncoding('utf8');
+	      res.on('data', function (chunk) {
+	      	get_req.data = JSON.parse(chunk);
+	        wait = false;
+	      });
+	  	}
+	  );
+
+	  request.on('error', (e) => {
+	  	console.error(e);
+	  	wait = false;
+	  })
+	  request.end();
+	  while( wait ) {
+	    await this.sleep(200);
+	  }
+	  // get the data
+	  return statusCode;
 	}
 }

@@ -8,7 +8,7 @@ export default class TitleBlock extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: this.props.editorstate,
+      editorState: this.props.editorState,
     }
     this._onChange = this.props.onChange;
     this.myBlockStyleFn = (contentBlock) => {
@@ -54,7 +54,7 @@ export default class TitleBlock extends React.Component {
         blockRenderMap={extendedBlockRenderMap}
         blockStyleFn={this.myBlockStyleFn}
         placeholder="Title"
-        readOnly={false}
+        readOnly={this.props.readOnly}
         />
     );
   }

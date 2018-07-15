@@ -148,7 +148,7 @@ export default class TeXBlock extends React.Component {
     }
 
     var editPanel = null;
-    if (this.state.editMode) {
+    if (this.state.editMode && !this.props.blockProps.readOnly) {
       var buttonClass = 'TeXEditor-saveButton';
       if (this.state.invalidTeX) {
         buttonClass += ' TeXEditor-invalidButton';

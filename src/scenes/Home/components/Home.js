@@ -5,31 +5,13 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import '../../../css/blog.css';
 import FeynmanDiagram from '../images/Feynmandiagram.svg';
 import Banner from './Banner.js';
-import Footer from '../../../components/Footer.js';
 
 import blogAPI from '../../../api/blog-api.js';
 
 class BlogCard extends Component {
     constructor(props){
         super(props);
-        let months = {
-            '01':'January', 
-            '02':'February', 
-            '03':'March',
-            '04':'April',
-            '05':'May',
-            '06':'June',
-            '07':'July',
-            '08':'August',
-            '09':'September',
-            '10':'October',
-            '11':'November',
-            '12':'December'
-            }
         this.date = this.props.published;
-        //this.date[2] = this.date[2].slice(0,2);
-        //this.date[1] = months[this.date[1]]
-
     }
     render(){
         return(
@@ -77,7 +59,6 @@ class Home extends Component {
 
     }
     componentWillMount() {
-        //console.log('start: ' + this.props.match.params.page);
         if(isNaN(this.props.match.params.page)){
             this.props.history.replace('/p/1');
         } else {
@@ -97,7 +78,6 @@ class Home extends Component {
     render() {
 
         if (this.state.loaded) {
-            console.log(this.state.resp)
             const { next_page, previous_page } = this.state.resp.data;
             let n_page = <span style={{padding:'2em', color:'grey'}}>{previous_page ?<Link onClick={()=>{this.page=previous_page}} to={"/p/" + previous_page} style={{color:'blue'}}>← Newer Posts</Link>:"← Newer Posts"}</span>;
             let p_page = <span style={{padding:'2em', color:'grey'}}>{next_page?<Link onClick={()=>{this.page=next_page}}to={"/p/" + next_page} style={{color:'blue'}}>Older Posts →</Link>:"Older Posts →"}</span>;
@@ -122,11 +102,10 @@ class Home extends Component {
                             {n_page}
                             {p_page}
                         </div>
-                        <Footer/>
+                        
 
                     </div>
                 </div>
-
             </Fragment>
             );
         } else {

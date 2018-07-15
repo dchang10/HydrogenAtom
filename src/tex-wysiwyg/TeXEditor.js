@@ -21,24 +21,34 @@ class StyleButton extends Component {
     
     this.onToggle = (e) => {
       e.preventDefault();
-      this.props.onToggle(this.props.className);
+      this.props.onToggle(this.props.type);
     };
   }
   
   render() {
-    let className = "styleButton";
-    
+    let className = this.props.className;
     if (this.props.active) {
       className += " active"; 
     }
     
-    if (this.props.style)
+    let style = {
+            border:'solid', 
+            borderColor:'#aaa', 
+            borderWidth:'0.05em', 
+            height:'2em', width:'3em'
+            };
+            
+    if (this.props.className)
       return (
-        <span className={className + ' editor-control'} onMouseDown={this.onToggle} style={this.props.style}>{this.props.label}</span>
+        <div>
+          <button style={style} className={className} onMouseDown={this.onToggle}></button>
+        </div>
       );
     else
       return(
-        <span className={className + ' editor-control'} onMouseDown={this.onToggle}>{this.props.label}</span>
+        <div>
+          <button style={style} onMouseDown={this.onToggle}><b>{this.props.label}</b></button>
+        </div>
       );      
   }
 }
@@ -52,35 +62,38 @@ class InlineStyleControls extends Component{
     this.INLINE_STYLES = [
       {label: 'Bold', 
         type: 'BOLD', 
-        style: {width:'3em', left:'0em', top:'10em', position:'fixed'}
+        className: 'fas fa-bold',
       },
       {label: 'Italic', 
         type: 'ITALIC', 
-        style: {width:'3em', left:'3em', top:'10em', position:'fixed'}
+        className: 'fas fa-italic',
       },
       {label: 'Underline', 
         type: 'UNDERLINE', 
-        style: {width:'5em', left:'6em', top:'10em', position:'fixed'}
+        className: 'fas fa-underline',
       },
       {label: 'Monospace', 
         type: 'CODE', 
-        style: {width:'6em', left:'11em', top:'10em', position:'fixed'}
+        className: 'fas fa-code',
       },
     ]; 
   }
   render(){
   return (
-    <div className="RichEditor-controls">
+    <div className="Inline-controls">
       {this.INLINE_STYLES.map(type =>
         <StyleButton
           key={type.label}
           active={this.currentStyle.has(type.type)}
           label={type.label}
           onToggle={this.props.onToggle}
-          className={type.type}
-          style={type.style}
+          className={type.className}
         />
       )}
+      <StyleButton
+        label="| T |"
+        onToggle={this.props.setTitle}
+      />
     </div>
   );
 }}
@@ -94,44 +107,36 @@ class BlockStyleControls extends Component {
                           .getBlockForKey(this.selection.getStartKey())
                           .getType();
     this.block_types = [
-		  { label: "h1", 
+		  { label: "H1", 
         type: "header-one", 
-        style:{width:'2.5em', top:'8em', left:'0', position:'fixed'}
       },
-		  { label: "h2", 
+		  { label: "H2", 
         type: "header-two", 
-        style:{width:'2.5em', top:'8em', left:'2em', position:'fixed'}
       },
-		  { label: "h3", 
+		  { label: "H3", 
         type: "header-three", 
-        style:{width:'2.5em', top:'8em', left:'4em', position:'fixed'} 
       },
 		  { label: '""', 
         type: "blockquote", 
-        style:{width:'2.5em', top:'8em', left:'6em', position:'fixed'}
       },
 		  { label: "ul", 
         type: "unordered-list-item", 
-        style:{width:'2.5em', top:'8em', left:'8em', position:'fixed'}
       },
 		  { label: "ol", 
         type: "ordered-list-item", 
-        style:{width:'2.5em', top:'8em', left:'10em', position:'fixed'}
       },
 		  { label: "</>", 
         type: "code-block", 
-        style:{width:'2.5em', top:'8em', 
-        left:'12em', position:'fixed'}
+        className: "fas fa-code",
       },
       { label: "drop", 
         type: "drop-caps", 
-        style:{width:'2.5em', top:'8em', left:'14em', position:'fixed'}
       }
 		];
   }
   render(){
     return (
-      <div className="block controls">
+      <div className="Block-controls">
         {
           this.block_types.map((type) => (
             <StyleButton
@@ -139,11 +144,21 @@ class BlockStyleControls extends Component {
               active={type.type === this.blockType}
               label={type.label}
               onToggle={this.props.onToggle}
-              className={type.type}
-              style={type.style}
+              className={type.className}
+              type={type.type}
             />
-          ))  
+          )
+        )  
         }
+        <StyleButton
+          label="Tex"
+          onToggle={this.props.insertTeX}
+        /> 
+        <StyleButton
+          label="Image"
+          onToggle={this.props.insertImage}
+          className={"fas fa-images"}
+        /> 
       </div>
     );
   }
@@ -217,6 +232,7 @@ export default class TeXEditor extends Component {
 	              });
 	            },
 	            onRemove: (blockKey) => this._removeTeX(blockKey),
+              readOnly: this.props.readOnly,
 	          },
 	        };
         case 'Image':
@@ -235,7 +251,8 @@ export default class TeXEditor extends Component {
                   editorState:EditorState.createWithContent(newContentState),
                 });
               },
-              onRemove: (blockKey) => this._removeImage(blockKey),
+              onRemove: (blockKey) => {this._removeImage(blockKey)},
+              readOnly: this.props.readOnly,
             }, 
           }
         default:
@@ -336,7 +353,7 @@ export default class TeXEditor extends Component {
       } ;
       this.setState({newPost:newPost});
       console.log(newPost); 
-      blogAPI.post(newPost);
+      blogAPI.post(newPost, this.props.username, this.props.password);
       console.log("state saved");      
     }
 		this._getBlockStyle = (block) => {
@@ -433,7 +450,6 @@ export default class TeXEditor extends Component {
         width: '100%', /* Full width */
         height: '100%', /* Full height */
         overflow: 'auto', /* Enable scroll if needed */
-        backgroundColor: 'rgb(0,0,0)', /* Fallback color */
         backgroundColor: 'rgba(0,0,0,0.4)', /* Black w/ opacity */
       }
       const styleMap = {
@@ -524,7 +540,7 @@ export default class TeXEditor extends Component {
           </form>
           <br/>
           <figure style={{textAlign:'center'}}>
-            <img style={{border:'3em',borderColor:'black'}} src={this.state.post.featured_image}/>
+            <img style={{border:'3em',borderColor:'black'}} src={this.state.post.featured_image} alt={"featured"}/>
           </figure>
           <button onClick={this._saveState}>Save</button>
         </div>
@@ -539,33 +555,26 @@ export default class TeXEditor extends Component {
             className="block"
             editorState={this.state.editorState}
             onToggle={this._toggleBlockType}
+            insertTeX={this._insertTeX}
+            insertImage={this._insertImage}
           />
           <InlineStyleControls
             editorState={this.state.editorState}
             onToggle={this._toggleInlineStyle}
+            setTitle={this._setTitle2}
            />
-          <StyleButton
-            className="TexButton"
-            label="Insert Tex"
-            onToggle={this._insertTeX}
-            style={{left:'0', top:'12em', width:'6em', position:'fixed'}}
-          /> 
-          <StyleButton
-            label="Title Style"
-            onToggle={this._setTitle2}
-            style={{left:'6em', top:'12em', width:'10em', position:'fixed'}}
-          />
-          <StyleButton
-            className="Image"
-            label="Image"
-            onToggle={this._insertImage}
-            style={{left:'12em', top:'12em', width:'6em', position:'fixed'}}
-          /> 
-          <StyleButton
+          <button
+            style = {{
+              border:'solid', 
+              borderColor:'#aaa', 
+              borderWidth:'0.05em', 
+              height:'2em', width:'5em'
+              }}
             className="save"
-            label="Save state"
             onToggle={this._openSavePanel}
-            style={{top:'8em', right:'0em', width:'6em', position:'fixed'}}/>
+            >
+              {"Save"}
+          </button>
         </div>
     }
     return (
@@ -573,7 +582,8 @@ export default class TeXEditor extends Component {
         <div style={{height:'3em'}}/>
         <TitleBlock 
           onChange={(titleState) =>{this._titleChange(titleState)}}
-          editorstate={this.state.titleState}
+          editorState={this.state.titleState}
+          readOnly={this.props.readOnly}
           />
         <div className="TeXEditor-editor" onClick={this._focus} >
           <Editor
@@ -595,5 +605,4 @@ export default class TeXEditor extends Component {
       </div>
     );
   }
-
 }

@@ -5,35 +5,14 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import HydrogenAtom from './scenes/hydrogenAtom/components/HydrogenAtom';
 import Home from './scenes/Home/components/Home';
 import Login from './scenes/Login/components/Login';
-import BlogPost from './scenes/Home/components/Posts/BlogPost';
+import BlogPost from './scenes/Posts/components/BlogPost';
 import NotFound from './scenes/Home/components/NotFound';
 import './App.css';
+import Footer from './components/Footer';
+
+import blogAPI from './api/blog-api';
 
 
-// ------------------------------------TODO incorporate this later
-const routes = [
-    {
-        path:"/",
-        exact:true,
-        main: () => <Home/>,
-        key: "/p/1"
-
-    },
-    {
-        path: "/pages/hydrogenAtom",
-        main: () => <HydrogenAtom/>,
-        key: "/pages//hydrogenAtom"
-    },
-    {
-        path: "/login",
-        main: () => <Login/>,
-        key: "/login"
-    },
-    {
-        path: "/post/:slug",
-
-    }
-];
 // -------------------------------------------------------------
 class NavigationBar extends Component{
     render(){
@@ -72,9 +51,19 @@ class ScrollToTopRoute extends Component {
   }
 
   render() {
-    const { component: Component, ...rest } = this.props;
+    const { 
+        component: Component, 
+        ...rest 
+    } = this.props;
 
-    return <Route {...rest} render={props => (<Component {...props} />)} />;
+    return <Route {...rest} render={(props) => (
+        <Component 
+            authenticated={this.props.authenticated} 
+            authenticate={async (username, password) => {return await this.props.authenticate(username, password)}} 
+            username={this.props.username}
+            password={this.props.password}
+            {...props} />
+        )} />;
   }
 }
 
@@ -82,23 +71,54 @@ class ScrollToTopRoute extends Component {
 
 class App extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            authenticated: false,
+            username: 'username',
+            password: 'password',
+        };
+
+        this.authenticate = async (username, password) => {
+            this.setState({username: username, password: password});
+            let statusCode = await blogAPI.authenticate(username, password);
+            if(statusCode === 200) {
+                console.log('Logged in');
+            this.setState({authenticated: true});
+            }
+            else {this.setState({authenticated: false});}
+            console.log(statusCode);
+            return statusCode;
+        }
+    }
+    
+
+
     render() {
 
         return(
-            <Router>
-                <Fragment>
-                    <NavigationBar/>
-                    <div style={{padding:'1.5em'}}/>
-                    <Switch>
-                        <ScrollToTopRoute path="/p/:page" component={Home} />
-                        <Redirect exact from="/" to="/p/1"/>
-                        <ScrollToTopRoute path="/pages/hydrogenAtom" component={HydrogenAtom} />
-                        <ScrollToTopRoute path="/pages/Login" component={Login} />
-                        <ScrollToTopRoute path="/post/:slug" component={BlogPost} />
-                        <ScrollToTopRoute path ="/404" component={NotFound} />
-                    </Switch>
-                </Fragment>
-            </Router>
+        <Fragment>
+            <div style={{minHeight:'60em'}}>
+                <Router>
+                    <Fragment>
+                        <NavigationBar/>
+                        <div style={{padding:'1.5em'}}/>
+                        <Switch>
+                            <ScrollToTopRoute path="/p/:page" component={Home} authenticated={this.state.authenticated}/>
+                            <Redirect exact from="/" to="/p/1"/>
+                            <ScrollToTopRoute path="/pages/hydrogenAtom" component={HydrogenAtom} />
+                            <ScrollToTopRoute path="/pages/Login" component={Login} authenticate={this.authenticate} authenticated={this.state.authenticated}/>
+                            <ScrollToTopRoute path="/post/:slug" component={BlogPost} authenticated={this.state.authenticated} username={this.state.username} password={this.state.password}/>
+                            <ScrollToTopRoute path ="/404" component={NotFound} />
+                        </Switch>
+                    </Fragment>
+                </Router>
+            </div>
+            <footer>
+                <Footer/>
+            </footer>
+        </Fragment>
+
         );
     }
 }

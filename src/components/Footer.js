@@ -1,6 +1,5 @@
 import React from 'react';
 import '../css/blog.css';
-import butterlogo from '../images/butter-light.6b4ab5bd4625.svg';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import brands from '@fortawesome/fontawesome-free-brands';
 

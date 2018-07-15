@@ -89,9 +89,8 @@ import React, { Component} from 'react';
 
  	}
  	render() {
-
     var editPanel = null;
-    if (this.state.editMode) {
+    if (this.state.editMode && !this.props.blockProps.readOnly) {
       var buttonClass = 'Image-saveButton';
       if (this.state.invalidTeX) {
         buttonClass += ' Imaged-invalidButton';
@@ -190,7 +189,9 @@ import React, { Component} from 'react';
           onDoubleClick={this._onDoubleClick} 
           style={{
             width:width, 
-            height:height,}}
+            height:height,
+          }}
+          alt={this.state.caption}
         />
           <figcaption>{this.state.caption}</figcaption>
          </figure>
