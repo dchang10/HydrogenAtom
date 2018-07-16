@@ -79,13 +79,9 @@ export default class blogAPI {
 
 	  var request_options = {
       host: 'vs259jn8d5.execute-api.us-east-2.amazonaws.com',
-      
       path: '/latest/pages?per_page=' + req.page_size + '&page=' + req.page,
       method: 'GET',
       port: '443',
-      headers: {
-      		'Authorization': 'Basic RG9jaGFuZzpzY2llbnRpc3QxMg==',
-      },
 	  };
 
 	  const request = https.request(
@@ -134,6 +130,7 @@ export default class blogAPI {
 
 	static deletePost(slug, username, password) {
 		let credentials = Buffer.from(username + ':' + password).toString('base64');
+		console.log(credentials);
 		let delete_options = {
       host: 'vs259jn8d5.execute-api.us-east-2.amazonaws.com',
      	port: '443', 

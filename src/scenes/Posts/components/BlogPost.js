@@ -7,8 +7,10 @@ export default class BlogPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      slug:this.props.match.params.slug,
-      authenticated:this.props.authenticated,
+      slug:props.match.params.slug,
+      authenticated:props.authenticated,
+      username:props.username,
+      password:props.password,
     };
   }
   deletePost(slug){
@@ -22,7 +24,7 @@ export default class BlogPost extends Component {
         <Link 
           style={{bottom:'12em', position:'fixed', padding:'1em 0em 1em 1em', }} 
           onClick={
-            ()=>this.deletePost(this.props.match.params.slug, this.props.username, this.props.password)
+            ()=>this.deletePost(this.props.match.params.slug, this.state.username, this.state.password)
           } 
           className="nav-link" 
           to="/"
