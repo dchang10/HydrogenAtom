@@ -57,7 +57,6 @@ export default class blogAPI {
 	  var post_req = https.request(post_options, function(res) {
       res.setEncoding('utf8');
       res.on('data', function (chunk) {
-          console.log('Response: ' + chunk);
       });
 
 	  });
@@ -130,13 +129,14 @@ export default class blogAPI {
 
 	static deletePost(slug, username, password) {
 		let credentials = Buffer.from(username + ':' + password).toString('base64');
-		console.log(credentials);
 		let delete_options = {
       host: 'vs259jn8d5.execute-api.us-east-2.amazonaws.com',
-     	port: '443', 
-      path: '/latest/posts/' + slug,
+			path: '/latest/posts/' + slug,
 			method: 'DELETE',
-			Authorization: 'Basic ' + credentials,
+     	port: '443', 
+			headers: {
+				'Authorization': 'Basic ' + credentials,
+			}
 	  }; 
 
 		let req = https.request(delete_options, (res) => {
@@ -158,7 +158,6 @@ export default class blogAPI {
 
 	  var request_options = {
       host: 'vs259jn8d5.execute-api.us-east-2.amazonaws.com',
-      
       path: '/latest/Login',
       method: 'GET',
       port: '443',
@@ -167,11 +166,11 @@ export default class blogAPI {
       },
 	  };
 
-	  let statusCode = 401;
+	  let authenticated = false;
 	  const request = https.request(
 	    request_options, 
 	    (res) => {
-	    	statusCode = res.statusCode;
+	    	authenticated = res.statusCode === 200;
 	      res.setEncoding('utf8');
 	      res.on('data', function (chunk) {
 	      	get_req.data = JSON.parse(chunk);
@@ -181,7 +180,7 @@ export default class blogAPI {
 	  );
 
 	  request.on('error', (e) => {
-	  	console.error(e);
+			console.error(e);
 	  	wait = false;
 	  })
 	  request.end();
@@ -189,6 +188,6 @@ export default class blogAPI {
 	    await this.sleep(200);
 	  }
 	  // get the data
-	  return statusCode;
+	  return authenticated;
 	}
 }

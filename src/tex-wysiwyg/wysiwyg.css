@@ -29,18 +29,17 @@
 }
 .drop-caps {
   font-size: 1rem;
-  line-height: 1.5rem;
   color: #000;
 }
 .drop-caps :first-child:first-letter {
-  color: rgb(172, 43, 55);
+  color: #AC2B37;
   float: left;
-  font-size: 75px;
-  line-height: 60px;
-  padding-top: 4px;
-  padding-right: 8px;
-  padding-left: 3px;
-}
+  font-family: Georgia;
+  font-size: 5em;
+  line-height: 0.9em;
+  padding-right: 0.1em;
+  padding-left: 0em;
+ }
 .align-left div {
     text-align: left;
 }

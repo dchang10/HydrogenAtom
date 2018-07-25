@@ -81,14 +81,13 @@ class App extends Component {
 
         this.authenticate = async (username, password) => {
             this.setState({username: username, password: password});
-            let statusCode = await blogAPI.authenticate(username, password);
-            if(statusCode === 200) {
+            let authenticated = await blogAPI.authenticate(username, password);
+            if(authenticated) {
                 console.log('Logged in');
             this.setState({authenticated: true});
             }
             else {this.setState({authenticated: false});}
-            console.log(statusCode);
-            return statusCode;
+            return authenticated;
         }
     }
     
@@ -107,8 +106,15 @@ class App extends Component {
                             <ScrollToTopRoute path="/p/:page" component={Home} authenticated={this.state.authenticated}/>
                             <Redirect exact from="/" to="/p/1"/>
                             <ScrollToTopRoute path="/pages/hydrogenAtom" component={HydrogenAtom} />
-                            <ScrollToTopRoute path="/pages/Login" component={Login} authenticate={this.authenticate} authenticated={this.state.authenticated}/>
-                            <ScrollToTopRoute path="/post/:slug" component={BlogPost} authenticated={this.state.authenticated} username={this.state.username} password={this.state.password}/>
+                            <ScrollToTopRoute path="/pages/Login" component={Login} 
+                                authenticate={this.authenticate} 
+                                authenticated={this.state.authenticated} 
+                                username={this.state.username} 
+                                password={this.state.password}/>
+                            <ScrollToTopRoute path="/post/:slug" component={BlogPost} 
+                                authenticated={this.state.authenticated} 
+                                username={this.state.username} 
+                                password={this.state.password}/>
                             <ScrollToTopRoute path ="/404" component={NotFound} />
                         </Switch>
                     </Fragment>

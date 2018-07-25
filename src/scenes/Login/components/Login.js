@@ -7,16 +7,13 @@ export default class Login extends Component {
     super(props);
     this.state = {
       authenticated: this.props.authenticated,
-      username: "username",
-      password: "password",
+      username: this.props.username,
+      password: this.props.password,
     };
 
     this._login = async() => {
-      let status_code = await this.props.authenticate(this.state.username, this.state.password);
-
-      if(status_code === 200) {
-        this.setState({authenticated:true});
-      }
+      let authenticated = await this.props.authenticate(this.state.username, this.state.password);
+      this.setState({authenticated:authenticated});
     }; 
   }
 
@@ -68,7 +65,7 @@ export default class Login extends Component {
 
     </div>
     return(
-      <div>
+      <div style={{maxWidth:'120em', margin:'auto'}}>
         <div style={{marginBottom:'2em'}}/>
         <div style={{minHeight:'35em'}}>
           {login_panel}

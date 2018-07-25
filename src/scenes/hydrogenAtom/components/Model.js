@@ -12,7 +12,7 @@ let vertexShader = `
     varying vec3 vColor; void main() { 
         vAlpha = alpha; vColor = customColor; 
         vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 ); 
-        gl_PointSize = size * ( 350.0 / -mvPosition.z ); gl_Position = projectionMatrix * mvPosition; 
+        gl_PointSize = size * ( 250.0 / -mvPosition.z ); gl_Position = projectionMatrix * mvPosition; 
     }
     `;
 
@@ -58,8 +58,9 @@ export default class Model extends React.Component{
             waveFunc += 'Neg';
         waveFunc += Math.abs(this.props.m);
 
-        this.range = 3 + 2.5 * this.props.n * this.props.n + 6 * this.props.l
-        this.resolution = 42 + 2.5 * this.props.n * this.props.n;
+        let temp = 2 * this.props.n * this.props.n
+        this.range = 3 + temp + 6 * this.props.l
+        this.resolution = this.range + 39;//42 + temp;
 
 
         let posArr = WaveFunctions.simpsonIntegrate(WaveFunctions.getFunc(waveFunc)/*eval(waveFunc)*/, -this.range, this.range, -this.range, this.range, -this.range, this.range, this.resolution);
@@ -247,9 +248,10 @@ export default class Model extends React.Component{
         let positions = new Float32Array(posArr.length * 3);
         for (let i = 0; i < posArr.length; i++) {
             let t = 3 * i;
-            positions[t] = posArr[i][0] + 1.75 * Math.random() * this.range / this.resolution;
-            positions[t + 1] = posArr[i][1] + 1.75 * Math.random() * this.range / this.resolution;
-            positions[t + 2] = posArr[i][2] + 1.75 * Math.random() * this.range / this.resolution;
+            let scale = 1.75 * this.range / this.resolution;
+            positions[t] = posArr[i][0] + Math.random() * scale; 
+            positions[t + 1] = posArr[i][1] + Math.random() * scale;
+            positions[t + 2] = posArr[i][2] + Math.random() * scale
         }
         return positions;
     }
@@ -275,7 +277,7 @@ export default class Model extends React.Component{
                 max = temp;
             alphas[i] = temp;
         }
-        return alphas.map(e => e / (0.25 * max + 1.75 * max * (this.props.l > 0)));
+        return alphas.map(e => e / ((0.15 + 0.35 * (this.props.l > 0)) * max));
     }
 
 

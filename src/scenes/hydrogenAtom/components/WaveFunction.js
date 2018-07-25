@@ -25,10 +25,10 @@
 							tempafter = foo(currentx+xsteps,currenty+ysteps,currentz+zsteps);
 							let value = xsteps*ysteps*zsteps*(tempcurr+4*tempmid+tempafter)/6;
 							if (value < 0){
-								coordinates.push([currentx+xsteps/2, currenty+ysteps/2, currentz+zsteps/2,Math.pow(value,2),0x0000ff]);	
+								coordinates.push([currentx+xsteps/2, currenty+ysteps/2, currentz+zsteps/2,Math.pow(Math.abs(value),2),0x0000ff]);	
 							}
 							else{
-								coordinates.push([currentx+xsteps/2, currenty+ysteps/2, currentz+zsteps/2,Math.pow(value,2),0xff0000]);
+								coordinates.push([currentx+xsteps/2, currenty+ysteps/2, currentz+zsteps/2,Math.pow(Math.abs(value),2),0xff0000]);
 							
 							}
 							

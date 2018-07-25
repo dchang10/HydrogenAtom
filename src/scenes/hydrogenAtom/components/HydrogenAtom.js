@@ -52,7 +52,7 @@ function BohrInfo(){
             <div className="col-lg-8">
                 <MathJax.Context input={'tex'}>
                     <p>
-                        <span className="drop-caps" align="center">P</span>hysics took a turn near the begining of the twentieth century. 1897 marked the year physicist J.J. Thomson discovered the electron, and 1911 was the year the nucleus was discovered through the famous <a href="https://en.wikipedia.org/wiki/Geiger%E2%80%93Marsden_experiment">Geiger-Marsden Experiment</a>. The leading atomic model at the time was the Rutherford atomic model, which predicted electron orbits around the nucleus to be similar to the orbits of celestial bodies around the sun. This model however had a few problems associated with it, most notably :-
+                        <span className="hydrogen__drop-caps" align="center">P</span>hysics took a turn near the begining of the twentieth century. 1897 marked the year physicist J.J. Thomson discovered the electron, and 1911 was the year the nucleus was discovered through the famous <a href="https://en.wikipedia.org/wiki/Geiger%E2%80%93Marsden_experiment">Geiger-Marsden Experiment</a>. The leading atomic model at the time was the Rutherford atomic model, which predicted electron orbits around the nucleus to be similar to the orbits of celestial bodies around the sun. This model however had a few problems associated with it, most notably :-
                     </p>
                 </MathJax.Context>
                     <blockquote style={{padding: "1em 5em 1em 5em"}}>
@@ -136,7 +136,7 @@ function SchrodingerInfo(){
             <div className="col-lg-8">
                 <MathJax.Context input={'tex'}>
                     <p>
-                        <span className="drop-caps">{"E"}</span>
+                        <span className="hydrogen__drop-caps">{"E"}</span>
                         {"ven after the Bohr Model of the Hydrogenic (Hydrogen like) atom, Quantum Mechanics was still in its infancy. The next major step came with the prediction of particle-wave duality by "}
                         <a href="https://en.wikipedia.org/wiki/Louis_de_Broglie">{"Louis de Broglie."}</a>
                         {" Using intuition of the paticle wave duality of light, de Broglie hypothesised that the momenta and energy of all particles are related to their wavelengths and frequencies by "}

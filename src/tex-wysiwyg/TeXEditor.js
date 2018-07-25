@@ -76,11 +76,6 @@ class InlineStyleControls extends Component {
         type: 'UNDERLINE',
         className: 'fas fa-underline',
       },
-      {
-        label: 'Monospace',
-        type: 'CODE',
-        className: 'fas fa-code',
-      },
     ];
   }
   render() {
@@ -91,14 +86,10 @@ class InlineStyleControls extends Component {
             key={type.label}
             active={this.currentStyle.has(type.type)}
             label={type.label}
-            onToggle={this.props.onToggle}
+            onToggle={()=>this.props.onToggle(type.type)}
             className={type.className}
           />
         )}
-        <StyleButton
-          label="| T |"
-          onToggle={this.props.setTitle}
-        />
       </div>
     );
   }
@@ -255,7 +246,8 @@ export default class TeXEditor extends Component {
           backgroundRepeat: 'no-repeat',
           horizontal: '100',
           vertical: '100',
-          size: '100',
+          width: '100',
+          height: '100',
         },
       },
     };
@@ -416,9 +408,7 @@ export default class TeXEditor extends Component {
         number: 'number',
       };
       this.setState({ newPost: newPost });
-      console.log(newPost);
       blogAPI.post(newPost, this.props.username, this.props.password);
-      console.log("state saved");
     }
 
     this._openBannerPanel = () => {
@@ -667,7 +657,7 @@ export default class TeXEditor extends Component {
           readOnly={this.props.readOnly}
         />
         <Banner
-          authenticated={this.props.authenticated}
+          readOnly={this.props.readOnly}
           ref='banner'
           open={this._openBannerPanel}
           close={this._closeBannerPanel}

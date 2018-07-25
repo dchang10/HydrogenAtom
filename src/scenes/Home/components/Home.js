@@ -20,7 +20,8 @@ class BlogCard extends Component {
                 <Link to={`/post/${this.props.slug}`} >
                     <div style={{
                         height: '10em',
-                        backgroundSize: image.size + '%',
+                        width: '100%',
+                        backgroundSize: image.width/2 + 'em ' + image.height/2 +'em',
                         backgroundPosition: image.horizontal + '% ' + image.vertical + '%',
                         backgroundRepeat: image.backgroundRepeat, textAlign: 'center',
                         backgroundImage: `url(${image.source})`
@@ -61,9 +62,6 @@ class Home extends Component {
                     resp: resp,
                 })
             });
-
-
-
     }
     componentWillMount() {
         if (isNaN(this.props.match.params.page)) {

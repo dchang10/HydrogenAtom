@@ -11,7 +11,8 @@ export default class Banner extends Component {
          showPanel: false,
          horizontal: image.horizontal,
          vertical: image.vertical,
-         size: image.size,
+         width: image.width,
+         height: image.height,
       };
 
       this.showPanel = this.state.showPanel;
@@ -28,9 +29,9 @@ export default class Banner extends Component {
 
    render() {
       let editPanel = null
-      if (this.state.showPanel && this.props.authenticated) {
+      if (this.state.showPanel && !this.props.readOnly) {
          editPanel =
-            <div style={{ textAlign: 'center' }}>
+            <div style={{ textAlign: 'center', zIndex:'2', display:'block' }}>
                <table className="Image-panel" align='center' style={{ boxShadow: "0.5em 1em 1em 0 rgba(0, 0, 0, 0.5)", backgroundColor: 'rgb(33, 37, 41)', width: '30em', height: '10em' }}>
                   <thead>
                      <tr>
@@ -74,24 +75,37 @@ export default class Banner extends Component {
                         </th>
                      </tr>
                      <tr>
-                        <th style={{ color: 'white' }}>Background Colour</th>
-                        <th style={{ color: 'white' }}>Size</th>
+                        <th style={{ color: 'white' }}>Width</th>
+                        <th style={{ color: 'white' }}>Height</th>
                      </tr>
                      <tr>
                         <th>
+                           <input
+                              onChange={(evt) => { this.setState({ width: evt.target.value }) }}
+                              ref="backgrondwidth"
+                              value={this.state.width}
+                           />
+                        </th>
+                        <th>
+                           <input
+                              onChange={(evt) => { this.setState({ height: evt.target.value }) }}
+                              ref="backgroundheight"
+                              value={this.state.height}
+                           />
+                        </th>
+                     </tr>
+                     <tr>
+                        <td colSpan="2"style={{ color: 'white' }}>Background Colour</td>
+                     </tr>
+                     <tr>
+                        <td colSpan="2">
                            <input
                               onChange={(evt) => { this.setState({ backgroundColor: evt.target.value }) }}
                               ref="backgrondColor"
                               value={this.state.backgroundColor}
                            />
-                        </th>
-                        <th>
-                           <input
-                              onChange={(evt) => { this.setState({ size: evt.target.value }) }}
-                              ref="backgrondsize"
-                              value={this.state.size}
-                           />
-                        </th>
+
+                        </td>
                      </tr>
                      <tr>
                         <td colSpan="2"><span style={{color:'white'}}>Source</span></td>
@@ -126,7 +140,7 @@ export default class Banner extends Component {
                   backgroundColor: this.state.backgroundColor,
                   backgroundRepeat: this.state.backgroundRepeat,
                   backgroundPosition: this.state.horizontal + '% ' + this.state.vertical + '%',
-                  backgroundSize: this.state.size + '%',
+                  backgroundSize: this.state.width + 'em ' + this.state.height + 'em',
                   margin: '5em 0 5em 0',
                }}
             />
