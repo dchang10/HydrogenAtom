@@ -133,15 +133,17 @@ export default class Banner extends Component {
          <div>
             <div onClick={() => this.open()}
                style={{
-                  height: '20em',
+                  height: '30em',
                   backgroundImage: `url(${this.state.source})`,
-                  borderWidth: '0.2em 0em 0.2em 0em',
-                  borderStyle: 'solid',
                   backgroundColor: this.state.backgroundColor,
                   backgroundRepeat: this.state.backgroundRepeat,
                   backgroundPosition: this.state.horizontal + '% ' + this.state.vertical + '%',
                   backgroundSize: this.state.width + 'em ' + this.state.height + 'em',
-                  margin: '5em 0 5em 0',
+                  margin: 'auto',
+                  marginTop: '5em',
+                  marginBottom: '7em',
+                  width: '30em',
+                  borderRadius: '50%',
                }}
             />
             {editPanel}

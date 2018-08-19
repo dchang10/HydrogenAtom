@@ -14,7 +14,7 @@ export default class TitleBlock extends React.Component {
     this.myBlockStyleFn = (contentBlock) => {
       const type = contentBlock.getType();
       if (type === 'unstyled') {
-        return 'align-center';
+        return 'title';
       }
     }
   }
@@ -35,22 +35,11 @@ export default class TitleBlock extends React.Component {
 
     // keep support for other draft default block types and add our myCustomBlock type
     const extendedBlockRenderMap = Draft.DefaultDraftBlockRenderMap.merge(blockRenderMap);
-    const styleMap = {
-      'title2': {
-        paddingLeft: '0.2em',
-        paddingRight: '0.2em',
-        borderLeftStyle: 'solid',
-        borderRightStyle: 'solid',
-        borderLeftWidth: '0.1em',
-        borderRightWidth: '0.1em',
-      },
-    };
     return (
       <Editor 
         editorState={this.state.editorState} 
         onChange={this._onChange}
         style={{fontSize:'1rem'}}{...this.props}
-        customStyleMap={styleMap}
         blockRenderMap={extendedBlockRenderMap}
         blockStyleFn={this.myBlockStyleFn}
         placeholder="Title"

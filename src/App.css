@@ -13,14 +13,7 @@
   padding: 20px;
   color: white;
 }
-.title-2 {
-    padding-left: 0.1em;
-    padding-right: 0.1em;
-    border-left-style: solid;
-    border-right-style: solid;
-    border-left-width: 0.1em;
-    border-right-width: 0.1em;
-}
+
 .App-title {
   font-size: 1.5em;
 }

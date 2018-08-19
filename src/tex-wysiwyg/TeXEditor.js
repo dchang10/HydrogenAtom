@@ -538,16 +538,6 @@ export default class TeXEditor extends Component {
       overflow: 'auto', /* Enable scroll if needed */
       backgroundColor: 'rgba(0,0,0,0.4)', /* Black w/ opacity */
     }
-    const styleMap = {
-      'title2': {
-        paddingLeft: '0.2em',
-        paddingRight: '0.2em',
-        borderLeftStyle: 'solid',
-        borderRightStyle: 'solid',
-        borderLeftWidth: '0.1em',
-        borderRightWidth: '0.1em',
-      },
-    };
 
     let savepanel =
       <div ref="myModal" className="modal" style={modalStyle}>
@@ -681,7 +671,6 @@ export default class TeXEditor extends Component {
         <div className="TeXEditor-editor" onClick={this._focus} >
           <Editor
             blockStyleFn={this._getBlockStyle}
-            customStyleMap={styleMap}
             blockRenderMap={extendedBlockRenderMap}
             blockRendererFn={this._blockRenderer}
             editorState={this.state.editorState}

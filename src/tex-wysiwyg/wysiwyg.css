@@ -15,17 +15,9 @@
   right:0em;
 }
 
-.title-2 {
-    text-align: center;
-    padding-left: 0.1em;
-    padding-right: 0.1em;
-    border-left-style: solid;
-    border-right-style: solid;
-    border-left-width: 0.1em;
-    border-right-width: 0.1em;
-}
-.align-center {
+.title {
   text-align: center;
+  font-weight: 900;
 }
 .drop-caps {
   font-size: 1rem;
