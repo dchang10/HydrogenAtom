@@ -171,7 +171,19 @@ class BlockStyleControls extends Component {
 
 export default class TeXEditor extends Component {
   constructor(props) {
-    let contentBlocksArray = ['Title'].map(word => {
+    let contentBlocksArray = ['title'].map(word => {
+      return new ContentBlock({
+        key: genKey(),
+        type: 'unstyled',
+        characterList: new List(Repeat(CharacterMetadata.create(), word.length)),
+        text: word,
+        entity: Entity.create(
+          'LINK',
+          'IMMUTABLE',
+        )
+      });
+    });
+    let bodyContentBlocksArray = ['Start a Post!'].map( word => {
       return new ContentBlock({
         key: genKey(),
         type: 'unstyled',
@@ -184,6 +196,7 @@ export default class TeXEditor extends Component {
       });
     });
     let titleContent = ContentState.createFromBlockArray(contentBlocksArray);
+    let bodyContent = ContentState.createFromBlockArray(bodyContentBlocksArray);
 
     super(props);
     this.state = {wait:true,}
@@ -229,7 +242,7 @@ export default class TeXEditor extends Component {
       wait:false,
       save: false,
       titleState: EditorState.createWithContent(titleContent),
-      editorState: EditorState.createEmpty(),
+      editorState: EditorState.createWithContent(bodyContent),
       liveEdits: Map(),
       post: {
         slug: 'slug',
@@ -386,7 +399,9 @@ export default class TeXEditor extends Component {
       }
     }
     this._openSavePanel = () => {
-      this.setState({ save: true });
+      let post = this.state.post;
+      post.published = new Date();
+      this.setState({ save: true, post: post });
 
     }
     this._closeSavePanel = () => {

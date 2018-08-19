@@ -55,7 +55,7 @@ class Home extends Component {
 
     }
     fetchPosts(page) {
-        blogAPI.getPages({ page: page, page_size: 3 }).then(
+        blogAPI.getPages({ page: page, page_size: 6 }).then(
             (resp) => {
                 this.setState({
                     loaded: true,
