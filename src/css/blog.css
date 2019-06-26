@@ -4,7 +4,7 @@ body {
 
 h1 {
     font-family: 'Zilla Slab', serif;
-    font-size: 500%;
+    font-size: 350%;
     margin-bottom: 10px;
     margin-top: 0px;
 }
@@ -49,17 +49,17 @@ img {
 }
 .box-title {
     border-style: solid solid solid solid;
-    border-left-width: 10px;
-    border-right-width: 10px;
+    border-left-width: 0.2em;
+    border-right-width: 0.2em;
 }
 
 .box-title-2 {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+    padding-left: 0.1em;
+    padding-right: 0.1em;
     border-left-style: solid;
     border-right-style: solid;
-    border-left-width: 10px;
-    border-right-width: 10px;
+    border-left-width: 0.1em;
+    border-right-width: 0.1em;
 }
 
 .blend-title {
@@ -121,7 +121,7 @@ img {
 }
 #my-footer {
   background-color: #dddddd;
-  z-index : 100000;
+  z-index : 1;
   border-style: solid hidden hidden hidden;
   border-width:5px
 }

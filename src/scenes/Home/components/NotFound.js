@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import '../../../css/blog.css';
 import FeynmanDiagram from '../images/Feynmandiagram.svg';
-import Footer from './Footer.js';
+import Footer from '../../../components/Footer.js';
 
 class NotFoundBanner extends Component{
     constructor(props){

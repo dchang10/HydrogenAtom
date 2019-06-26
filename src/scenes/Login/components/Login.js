@@ -1,40 +1,77 @@
-import React, { Component } from 'react';
-//import 'bootstrap/dist/css/bootstrap.min.css';
-//import 'bootstrap/dist/js/bootstrap.min.js';
+import React, { Component} from 'react';
+import TexEditor from '../../../tex-wysiwyg/TeXEditor';
 
-export default class Login extends Component{
-    constructor(props){
-        super(props);
-        this.state={username:'admin', password:'admin'};
-        this.handleChange1 = this.handleChange1.bind(this);
-        this.handleChange2 = this.handleChange2.bind(this);
-    }
-    handleChange1(event) {
-        this.setState({username: event.target.value})
-    }
-    handleChange2(event) {
-        this.setState({password: event.target.value})
-    }
+export default class Login extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      authenticated: this.props.authenticated,
+      username: this.props.username,
+      password: this.props.password,
+    };
 
-        render() {
-            return(
-                <div>
-                    <h1>
-                        Login
-                    </h1>
-                    <form>
-                        <div className="form-group">
-                            <label htmlFor="username"> Username:</label>
-                            <input type="text" className="form-control" id="username" placeholder="enter username" value={this.state.value} onChange={this.handleChange1}/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password"> Password:</label>
-                            <input type="text" className="form-control" id="password" placeholder="enter pasword" value={this.state.value} onChange={this.handleChange2}/>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
-            );
+    this._login = async() => {
+      let authenticated = await this.props.authenticate(this.state.username, this.state.password);
+      this.setState({authenticated:authenticated});
+    }; 
+  }
+
+  render() {
+    let modalStyle = {
+      display: !this.state.authenticated?'inline':'none',
+      position: 'fixed', /* Stay in place */
+      zIndex: '2', /* Sit on top */
+      paddingTop: '100px', /* Location of the box */
+      left: '0',
+      top: '0',
+      width: '100%', /* Full width */
+      height: '100%', /* Full height */
+      overflow: 'auto', /* Enable scroll if needed */
+      backgroundColor: 'rgba(0,0,0,0.4)', /* Black w/ opacity */
     }
+   let login_panel =  
+    <div ref="myModal" className="modal" style={modalStyle}>
+     <div className="modal-content" style={{
+          backgroundColor:'#fefefe', 
+          margin:'auto', 
+          padding:'20px', 
+          border:'1px solid #888', 
+          maxWidth:'400px',
+          width:'80%',
+        }}>
+          <h1>Login</h1>
+          <form>
+            Username:<br/>
+            <input style={{width:'100%'}} type="text" ref="slug" value={this.state.username} onChange={
+              (evt) =>{
+                let username = evt.target.value;
+                this.setState({username:username});
+              }
+            }/>
+            <br/>
+            Password:<br/>
+            <input style={{width:'100%'}} type="password" ref="status" value={this.state.password} onChange={
+              (evt) =>{
+                let password = evt.target.value;
+                this.setState({password:password});
+              }
+            }/> 
+            <br/>
+          </form>
+          <br/>
+          <button onClick={this._login}>Login</button>
+        </div>
+
+    </div>
+    return(
+      <div style={{maxWidth:'120em', margin:'auto'}}>
+        <div style={{marginBottom:'2em'}}/>
+        <div style={{minHeight:'35em'}}>
+          {login_panel}
+          <TexEditor readOnly={!this.state.authenticated} username={this.state.username} password={this.state.password}/>
+        </div>
+      </div>
+    );
+  }
 }

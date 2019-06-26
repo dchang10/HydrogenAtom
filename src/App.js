@@ -5,33 +5,14 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import HydrogenAtom from './scenes/hydrogenAtom/components/HydrogenAtom';
 import Home from './scenes/Home/components/Home';
 import Login from './scenes/Login/components/Login';
-import BlogPost from './scenes/Home/components/Posts/BlogPost';
+import BlogPost from './scenes/Posts/components/BlogPost';
 import NotFound from './scenes/Home/components/NotFound';
+import './App.css';
+import Footer from './components/Footer';
 
-// ------------------------------------TODO incorporate this later
-const routes = [
-    {
-        path:"/",
-        exact:true,
-        main: () => <Home/>,
-        key: "/p/1"
+import blogAPI from './api/blog-api';
 
-    },
-    {
-        path: "/pages/hydrogenAtom",
-        main: () => <HydrogenAtom/>,
-        key: "/pages//hydrogenAtom"
-    },
-    {
-        path: "/login",
-        main: () => <Login/>,
-        key: "/login"
-    },
-    {
-        path: "/post/:slug",
 
-    }
-];
 // -------------------------------------------------------------
 class NavigationBar extends Component{
     render(){
@@ -52,6 +33,9 @@ class NavigationBar extends Component{
                         <li className="nav-item">
                             <Link className="nav-link" to="/pages/hydrogenAtom" style={{padding:'1em 0em 1em 1em'}}>Hydrogen Atom</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/pages/Login" style={{padding:'1em 0em 1em 1em'}}>Login</Link>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -67,9 +51,19 @@ class ScrollToTopRoute extends Component {
   }
 
   render() {
-    const { component: Component, ...rest } = this.props;
+    const { 
+        component: Component, 
+        ...rest 
+    } = this.props;
 
-    return <Route {...rest} render={props => (<Component {...props} />)} />;
+    return <Route {...rest} render={(props) => (
+        <Component 
+            authenticated={this.props.authenticated} 
+            authenticate={async (username, password) => {return await this.props.authenticate(username, password)}} 
+            username={this.props.username}
+            password={this.props.password}
+            {...props} />
+        )} />;
   }
 }
 
@@ -77,22 +71,60 @@ class ScrollToTopRoute extends Component {
 
 class App extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            authenticated: false,
+            username: 'username',
+            password: 'password',
+        };
+
+        this.authenticate = async (username, password) => {
+            this.setState({username: username, password: password});
+            let authenticated = await blogAPI.authenticate(username, password);
+            if(authenticated) {
+                console.log('Logged in');
+            this.setState({authenticated: true});
+            }
+            else {this.setState({authenticated: false});}
+            return authenticated;
+        }
+    }
+    
+
+
     render() {
 
         return(
-            <Router>
-                <Fragment>
-                    <NavigationBar/>
-                    <div style={{padding:'1.5em'}}/>
-                    <Switch>
-                        <ScrollToTopRoute path="/p/:page" component={Home} />
-                        <Redirect exact from="/" to="/p/1"/>
-                        <ScrollToTopRoute path="/pages/hydrogenAtom" component={HydrogenAtom} />
-                        <ScrollToTopRoute path="/post/:slug" component={BlogPost} />
-                        <ScrollToTopRoute path ="/404" component={NotFound} />
-                    </Switch>
-                </Fragment>
-            </Router>
+        <Fragment>
+            <div style={{minHeight:'60em'}}>
+                <Router>
+                    <Fragment>
+                        <NavigationBar/>
+                        <div style={{padding:'1.5em'}}/>
+                        <Switch>
+                            <ScrollToTopRoute path="/p/:page" component={Home} authenticated={this.state.authenticated}/>
+                            <Redirect exact from="/" to="/p/1"/>
+                            <ScrollToTopRoute path="/pages/hydrogenAtom" component={HydrogenAtom} />
+                            <ScrollToTopRoute path="/pages/Login" component={Login} 
+                                authenticate={this.authenticate} 
+                                authenticated={this.state.authenticated} 
+                                username={this.state.username} 
+                                password={this.state.password}/>
+                            <ScrollToTopRoute path="/post/:slug" component={BlogPost} 
+                                authenticated={this.state.authenticated} 
+                                username={this.state.username} 
+                                password={this.state.password}/>
+                            <ScrollToTopRoute path ="/404" component={NotFound} />
+                        </Switch>
+                    </Fragment>
+                </Router>
+            </div>
+            <footer>
+                <Footer/>
+            </footer>
+        </Fragment>
+
         );
     }
 }

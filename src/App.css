@@ -21,7 +21,17 @@
 .App-intro {
   font-size: large;
 }
-
+.editor-control {
+  color: #999;
+  cursor: pointer;
+  margin-right: 16px;
+  padding: 2px 0;
+  display: inline-block; 
+}
+pre {
+  background-color: #eeeeee;
+  margin:0em;
+}
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
