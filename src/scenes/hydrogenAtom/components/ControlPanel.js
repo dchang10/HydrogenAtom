@@ -2,10 +2,27 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import '../css/hydrogen.css'
 import React, {Component, Fragment} from 'react';
+import Slider from 'react-input-slider';
 require("jquery/package.json");
 require('popper.js/package.json');
 const $ = require('jquery');
 
+class ResolutionSlider extends Component{
+    render(){
+        return(
+            <input 
+                className="custom-range" 
+                type="range" 
+                min="30"
+                max="60"
+                step="2"
+                id={this.props.id} 
+                onChange={()=>{this.props.onChange(document.getElementById(this.props.id).value)}}
+                style={{marginBottom:'0em'}}
+                />
+        );
+    }    
+}
 
 class SubOrbitalButton extends Component{
     render(){
@@ -42,9 +59,10 @@ class OrbitalButton extends Component{
 export default class ControlPanel extends Component{
     constructor(props){
         super(props);
-        this.state = {n:1, l:0, m:0};
-        this.Lbuttons = <SubOrbitalButton id='l0' value={0} onFocus={()=>this.handleChangeL(1)}/>;
-        this.Mbuttons = <SubOrbitalButton id='m0' value={0} onFocus={()=>this.handleChangeM(1)}/>;
+        this.state = {n:1, l:0, m:0, resolution:45};
+        this.Lbuttons = <SubOrbitalButton id='l0' value={0} onFocus={()=>this.handleChangeL(0)}/>;
+        this.Mbuttons = <SubOrbitalButton id='m0' value={0} onFocus={()=>this.handleChangeM(0)}/>;
+        this.ResolutionSlider = <ResolutionSlider id="resolution" onChange={(i)=>this.handleChangeResolution(i)}/>;
         this.setStateParent = props.onChange;
     }
 //------------------------------------------------State change Handlers
@@ -52,17 +70,22 @@ export default class ControlPanel extends Component{
         this.Lbuttons = this.renderLbuttons(i);
         this.setState({n:i,l:0,m:0});
         $('#l0').parent().click();
-        this.setStateParent(i, 0, 0);
+        this.setStateParent(i, 0, 0, this.state.resolution);
     }
     handleChangeL(i){// Handles the change in state of L quantum number
         this.Mbuttons = this.renderMbuttons(i);
         this.setState({l:i,m:0});
         $('#m0').parent().click();
-        this.setStateParent(this.state.n, i, 0);
+        this.setStateParent(this.state.n, i, 0, this.state.resolution);
     }
     handleChangeM(i){// Handles the change in state of M quantum number
         this.setState({m:i});
-        this.setStateParent(this.state.n, this.state.l, i);
+        this.setStateParent(this.state.n, this.state.l, i, this.state.resolution);
+    }
+
+    handleChangeResolution(i){// Handles the change in state of Resolution
+        this.setState({resolution:i});
+        this.setStateParent(this.state.n, this.state.l, this.state.m, i);
     }
 
     //Control Button Rendering
@@ -115,6 +138,7 @@ export default class ControlPanel extends Component{
                     </div>
                 </div>
                 <div className="row">
+
                     <div className="col-lg-1">
                         <h3 style={{fontFamily: 'Bubbler One, sans-serif', color:'white', paddingTop:'0.1em'}} align="left">
                             m
@@ -122,6 +146,16 @@ export default class ControlPanel extends Component{
                     </div>
                     <div className="btn-group" id="m" data-toggle="buttons" style={{paddingLeft:'1em'}}>
                         {this.Mbuttons}
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-lg-1">
+                        <h3 style={{fontFamily: 'Bubbler One, sans-serif', color:'white'}} align="left">
+                            Resolution    
+                        </h3>
+                    </div>
+                    <div className="btn-group" style={{paddingLeft:'6em'}}>
+                        {this.ResolutionSlider}
                     </div>
                 </div>
             </div>

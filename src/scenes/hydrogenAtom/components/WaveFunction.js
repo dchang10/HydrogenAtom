@@ -188,7 +188,8 @@
 				return 2*(Math.pow(x,2)-Math.pow(y,2))*z*r43(x,y,z);				
 			}
 			export function n4l3mPos3(x,y,z){
-				return 2*(3*Math.pow(x,2)-Math.pow(y,2))*y*r43(x,y,z)/1.2;
+				return 2*(3*Math.pow(x,2)-Math.pow(y,2))*y*r43(x,y,z)/1.2 + y*(5*Math.pow(z,2)- Math.pow(r(x,y,z),2))*r43(x,y,z);
+;
 			}
             export function getFunc(str){
                 return(functionHash[str]);

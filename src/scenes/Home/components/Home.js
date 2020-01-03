@@ -91,7 +91,7 @@ class Home extends Component {
                 <Fragment>
                     <div className="container-fluid" >
                         <Banner image={FeynmanDiagram}>Physics Blog</Banner>
-                        <div className="row" style={{ zIndex: '2', height: '40em' }}>
+                        <div className="row" style={{ zIndex: '2', minHeight: '40em' }}>
                             <div className='col-lg-2' style={{ backgroundColor: '#eeeeee' }} />
                             <div className='col-lg-8' style={{ backgroundColor: '#eeeeee' }}>
                                 <div className='row'>

@@ -33,7 +33,7 @@ export default class Model extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {n:1, l:0, m:0, equation: WaveFunctions.n1l0m0};
+        this.state = {n:1, l:0, m:0, equation: WaveFunctions.n1l0m0, resolution: 45};
         this.start = this.start.bind(this);
         this.stop = this.stop.bind(this);
         this.animate = this.animate.bind(this);
@@ -49,7 +49,7 @@ export default class Model extends React.Component{
     reload() {
         this.enableRotation = true;
 
-        this.cameraOffset = 5 + 5 * Math.pow(this.props.n, 2) + 10 * this.props.l;
+        //this.cameraOffset = 5 + 5 * Math.pow(this.props.n, 2) + 10 * this.props.l;
 
         let waveFunc = "n" + this.props.n + "l" + this.props.l + "m";
         if (this.props.m > 0)
@@ -60,7 +60,7 @@ export default class Model extends React.Component{
 
         let temp = 2 * this.props.n * this.props.n
         this.range = 3 + temp + 6 * this.props.l
-        this.resolution = this.range + 39;//42 + temp;
+        this.resolution = this.props.resolution;//this.range + 39;//42 + temp;
 
 
         let posArr = WaveFunctions.simpsonIntegrate(WaveFunctions.getFunc(waveFunc)/*eval(waveFunc)*/, -this.range, this.range, -this.range, this.range, -this.range, this.range, this.resolution);
@@ -71,12 +71,14 @@ export default class Model extends React.Component{
         this.geometry.addAttribute('alpha', new THREE.BufferAttribute(this.cubeAlpha(posArr), 1));
 
         this.particleSystem = new THREE.Points(this.geometry, this.shaderMaterial);
+        /*
         this.modelCamera.position.z = this.cameraOffset;
         this.modelCamera.position.x = 0;
         this.modelCamera.position.y = 0;
         this.axesCamera.position.z = 10;
         this.axesCamera.position.x = 0;
         this.axesCamera.position.y = 0;
+        */
 
 
         //reloadChart();
@@ -233,14 +235,15 @@ export default class Model extends React.Component{
             this.modelCamera.position.x = r * Math.cos(this.angle);
             this.axesCamera.position.z = p * Math.sin(this.angle);
             this.axesCamera.position.x = p * Math.cos(this.angle);
-            this.angle += 0.01;
+            this.angle += 0.001;
         }
         if(
             this.state.n !== this.props.n 
             || this.state.l !== this.props.l 
             || this.state.m !== this.props.m
+            || this.state.resolution !== this.props.resolution
         ){
-            this.setState({n:this.props.n, l:this.props.l, m:this.props.m});
+            this.setState({n:this.props.n, l:this.props.l, m:this.props.m, resolution:this.props.resolution});
             this.reload();
         }
     }
@@ -271,6 +274,7 @@ export default class Model extends React.Component{
     cubeAlpha(posArr) {
         let alphas = new Float32Array(posArr.length);
         let max = 0;
+
         for (let i = 0; i < posArr.length; i++) {
             let temp = posArr[i][3];
             if (temp > max)

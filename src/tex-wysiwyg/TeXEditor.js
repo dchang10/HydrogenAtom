@@ -271,51 +271,56 @@ export default class TeXEditor extends Component {
       var contentState = this.state.editorState.getCurrentContent();
       var entityKey = block.getEntityAt(0);
       if (block.getType() === 'atomic') {
-        switch (contentState.getEntity(entityKey).getData()['type']) {
-          case 'TeX':
-            return {
-              component: TeXBlock,
-              editable: false,
-              props: {
-                onStartEdit: (blockKey) => {
-                  var { liveEdits } = this.state;
-                  this.setState({ liveEdits: liveEdits.set(blockKey, true) });
+        try{
+          switch (contentState.getEntity(entityKey).getData()['type']) {
+            case 'TeX':
+              return {
+                component: TeXBlock,
+                editable: false,
+                props: {
+                  onStartEdit: (blockKey) => {
+                    var { liveEdits } = this.state;
+                    this.setState({ liveEdits: liveEdits.set(blockKey, true) });
+                  },
+                  onFinishEdit: (blockKey, newContentState) => {
+                    var { liveEdits } = this.state;
+                    this.setState({
+                      liveEdits: liveEdits.remove(blockKey),
+                      editorState: EditorState.createWithContent(newContentState),
+                    });
+                  },
+                  onRemove: (blockKey) => this._removeTeX(blockKey),
+                  readOnly: this.props.readOnly,
                 },
-                onFinishEdit: (blockKey, newContentState) => {
-                  var { liveEdits } = this.state;
-                  this.setState({
-                    liveEdits: liveEdits.remove(blockKey),
-                    editorState: EditorState.createWithContent(newContentState),
-                  });
+              };
+            case 'Image':
+              return {
+                component: Image,
+                editable: false,
+                props: {
+                  onStartEdit: (blockKey) => {
+                    var { liveEdits } = this.state;
+                    this.setState({ liveEdits: liveEdits.set(blockKey, true) });
+                  },
+                  onFinishEdit: (blockKey, newContentState) => {
+                    var { liveEdits } = this.state;
+                    this.setState({
+                      liveEdits: liveEdits.remove(blockKey),
+                      editorState: EditorState.createWithContent(newContentState),
+                    });
+                  },
+                  onRemove: (blockKey) => { this._removeImage(blockKey) },
+                  readOnly: this.props.readOnly,
                 },
-                onRemove: (blockKey) => this._removeTeX(blockKey),
-                readOnly: this.props.readOnly,
-              },
-            };
-          case 'Image':
-            return {
-              component: Image,
-              editable: false,
-              props: {
-                onStartEdit: (blockKey) => {
-                  var { liveEdits } = this.state;
-                  this.setState({ liveEdits: liveEdits.set(blockKey, true) });
-                },
-                onFinishEdit: (blockKey, newContentState) => {
-                  var { liveEdits } = this.state;
-                  this.setState({
-                    liveEdits: liveEdits.remove(blockKey),
-                    editorState: EditorState.createWithContent(newContentState),
-                  });
-                },
-                onRemove: (blockKey) => { this._removeImage(blockKey) },
-                readOnly: this.props.readOnly,
-              },
-            }
-          default:
-            return null;
+              }
+            default:
+              return null;
+          }
+        } catch (err) {
+          console.log(err.message);
+          return null;
         }
-      }
+      }      
       return null;
     };
 

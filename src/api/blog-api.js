@@ -88,6 +88,7 @@ export default class blogAPI {
 	    (res) => {
 	      res.setEncoding('utf8');
 	      res.on('data', function (chunk) {
+					console.log(chunk);
 	      	get_req.data = JSON.parse(chunk);
 	        wait = false;
 	      });
