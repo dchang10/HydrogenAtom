@@ -33,7 +33,7 @@ export default class Model extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {n:1, l:0, m:0, equation: WaveFunctions.n1l0m0, resolution: 45};
+        this.state = {n:1, l:0, m:0, equation: WaveFunctions.n1l0m0, resolution: 46};
         this.start = this.start.bind(this);
         this.stop = this.stop.bind(this);
         this.animate = this.animate.bind(this);
@@ -60,7 +60,7 @@ export default class Model extends React.Component{
 
         let temp = 2 * this.props.n * this.props.n
         this.range = 3 + temp + 6 * this.props.l
-        this.resolution = this.props.resolution;//this.range + 39;//42 + temp;
+        this.resolution = this.props.resolution;
 
 
         let posArr = WaveFunctions.simpsonIntegrate(WaveFunctions.getFunc(waveFunc)/*eval(waveFunc)*/, -this.range, this.range, -this.range, this.range, -this.range, this.range, this.resolution);
@@ -78,11 +78,8 @@ export default class Model extends React.Component{
         this.axesCamera.position.z = 10;
         this.axesCamera.position.x = 0;
         this.axesCamera.position.y = 0;
-        
-
-
-        //reloadChart();
     }
+    static getDerivedStateFromProps
     componentDidMount(){
 
         this.orbitalRenderer = new THREE.WebGLRenderer({canvas:document.getElementById('my-canvas'), resize:true});
@@ -103,7 +100,7 @@ export default class Model extends React.Component{
         });
 
 
-        this.resolution = 45;
+        this.resolution = this.state.resolution;
         this.range = 5;
 
         this.cameraOffset = 10;

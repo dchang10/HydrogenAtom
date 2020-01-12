@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import '../css/hydrogen.css'
 import React, {Component, Fragment} from 'react';
-import Slider from 'react-input-slider';
 require("jquery/package.json");
 require('popper.js/package.json');
 const $ = require('jquery');
@@ -10,8 +9,7 @@ const $ = require('jquery');
 class ResolutionSlider extends Component{
     constructor(props){
         super(props)
-        console.log(props)
-        this.state = {value: 45}
+        this.state = {value: 46}
         this.value = this.state.value;
     }
     handleChange(i){
@@ -73,11 +71,12 @@ class OrbitalButton extends Component{
 export default class ControlPanel extends Component{
     constructor(props){
         super(props);
-        this.state = {n:1, l:0, m:0, resolution:45};
+        this.state = {n:1, l:0, m:0, resolution:46};
         this.Lbuttons = <SubOrbitalButton id='l0' value={0} onFocus={()=>this.handleChangeL(0)}/>;
         this.Mbuttons = <SubOrbitalButton id='m0' value={0} onFocus={()=>this.handleChangeM(0)}/>;
         this.setStateParent = props.onChange;
     }
+
     componentDidMount(){
         this.ResolutionSlider = this.refs.resolution;
     }
@@ -114,14 +113,14 @@ export default class ControlPanel extends Component{
     renderLbuttons(i){
         let buttons = [];
         for(let j = 0; j < i;j++){
-            buttons.push(<SubOrbitalButton id={'l' +j} value={j} onFocus={() =>this.handleChangeL(j)}/>);
+            buttons.push(<SubOrbitalButton key={'l'+j} id={'l' +j} value={j} onFocus={() =>this.handleChangeL(j)}/>);
         }
         return buttons;
     }
     renderMbuttons(i){
         let buttons = [];
         for(let j = -i; j <= i;j++){
-            buttons.push(<SubOrbitalButton id={'m' +j} value={j} onFocus={() =>this.handleChangeM(j)}/>);
+            buttons.push(<SubOrbitalButton key={'m'+j} id={'m' +j} value={j} onFocus={() =>this.handleChangeM(j)}/>);
         }
         return buttons;
     }

@@ -166,7 +166,6 @@ export default class Graph extends React.Component{
         var context = this.refs.canvas.getContext('2d');
         var MY = 0;
         let points = [];
-        let canvas = this.refs.canvas;
         for (var x = this.minX + this.iteration; x <= this.maxX; x += this.iteration) {
             let temp =  equation(x, 0, 0);
             if(temp > MY)

@@ -209,7 +209,7 @@ class HydrogenAtom extends Component {
 class OrbitalView extends Component{
     constructor(props){
         super(props);
-        this.state = {n:1, l:0, m:0, resolution:45};
+        this.state = {n:1, l:0, m:0, resolution:46};
         this.waveFunc = "n" + this.state.n + "l" + this.state.l + "m";
         if (this.state.m > 0)
             this.waveFunc += 'Pos';
