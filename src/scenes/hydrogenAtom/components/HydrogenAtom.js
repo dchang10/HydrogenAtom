@@ -226,7 +226,6 @@ class OrbitalView extends Component{
         else if (M < 0)
             this.waveFunc += 'Neg';
         this.waveFunc += Math.abs(M);
-        console.log(this.state.resolution);
 
     }
     

@@ -38,7 +38,9 @@ export default class Graph extends React.Component{
 
         this.unitsPerTick = this.state.n;
         this.rangeX = 3 + 2 * this.state.n * this.state.n + 10*this.state.l;
-        this.unitX = (canvas.width - 57) / this.rangeX;
+        this.maxX = this.rangeX + this.minX;
+        this.unitX = (canvas.width -57) / this.rangeX;
+        this.scaleX = this.unitX;
         context.clearRect(0, 0, 1000, 1000);
         this.drawXAxis();
         this.drawYAxis();
@@ -56,7 +58,7 @@ export default class Graph extends React.Component{
         this.centerY = Math.round(Math.abs(this.minY / this.rangeY) * canvas.height);
         this.centerX = Math.round(Math.abs(this.minX / this.rangeX) * (canvas.width - 57));
         this.iteration = (this.maxX - this.minX) / 1000;
-        this.scaleX = (canvas.width - 57) / this.rangeX;
+        this.scaleX = (canvas.width - 57 ) / this.rangeX;
         this.scaleY = canvas.height / this.rangeY;
 
         this.reloadGraph();
@@ -101,17 +103,6 @@ export default class Graph extends React.Component{
         context.font = "8pt Bubbler One"
         context.textBaseline = 'top';
 
-        // draw left tick marks
-        xPos = this.centerX - xPosIncrement;
-        unit = -1 * this.unitsPerTick;
-        while (xPos > 0) {
-            context.moveTo(xPos, this.centerY - this.tickSize / 2);
-            context.lineTo(xPos, this.centerY + this.tickSize / 2);
-            context.stroke();
-            //context.fillText(unit, xPos, this.centerY + this.tickSize / 2 + 3);
-            unit -= this.unitsPerTick;
-            xPos = Math.round(xPos - xPosIncrement);
-        }
 
         // draw right tick marks
         xPos = this.centerX + xPosIncrement;
@@ -124,12 +115,14 @@ export default class Graph extends React.Component{
             unit += this.unitsPerTick;
             xPos = Math.round(xPos + xPosIncrement);
         }
+        // draw arrow head
         context.moveTo(canvas.width - 57, this.centerY + this.tickSize / 2 - 3);
         context.lineTo(canvas.width - 60, this.centerY + this.tickSize / 2 - 5);
         context.stroke(); 
         context.moveTo(canvas.width - 57, this.centerY + this.tickSize / 2 - 3); 
         context.lineTo(canvas.width - 60, this.centerY + this.tickSize / 2);
         context.stroke(); 
+
         context.fillText('r [Bohr radii]' , (canvas.width - 38), this.centerY + this.tickSize / 2 - 20);  
         context.restore();
     };
@@ -173,6 +166,7 @@ export default class Graph extends React.Component{
         var context = this.refs.canvas.getContext('2d');
         var MY = 0;
         let points = [];
+        let canvas = this.refs.canvas;
         for (var x = this.minX + this.iteration; x <= this.maxX; x += this.iteration) {
             let temp =  equation(x, 0, 0);
             if(temp > MY)

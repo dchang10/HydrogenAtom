@@ -8,6 +8,18 @@ require('popper.js/package.json');
 const $ = require('jquery');
 
 class ResolutionSlider extends Component{
+    constructor(props){
+        super(props)
+        console.log(props)
+        this.state = {value: 45}
+        this.value = this.state.value;
+    }
+    handleChange(i){
+        this.setState = {value : i};
+        this.refs.slider.value = i;
+        this.props.onChange(i);
+        this.value = i;
+    }
     render(){
         return(
             <input 
@@ -17,7 +29,9 @@ class ResolutionSlider extends Component{
                 max="60"
                 step="2"
                 id={this.props.id} 
-                onChange={()=>{this.props.onChange(document.getElementById(this.props.id).value)}}
+                ref="slider"
+                onInput={(i)=>{this.handleChange(i.target.value)}}
+                value={this.props.value}
                 style={{marginBottom:'0em'}}
                 />
         );
@@ -62,25 +76,30 @@ export default class ControlPanel extends Component{
         this.state = {n:1, l:0, m:0, resolution:45};
         this.Lbuttons = <SubOrbitalButton id='l0' value={0} onFocus={()=>this.handleChangeL(0)}/>;
         this.Mbuttons = <SubOrbitalButton id='m0' value={0} onFocus={()=>this.handleChangeM(0)}/>;
-        this.ResolutionSlider = <ResolutionSlider id="resolution" onChange={(i)=>this.handleChangeResolution(i)}/>;
         this.setStateParent = props.onChange;
+    }
+    componentDidMount(){
+        this.ResolutionSlider = this.refs.resolution;
     }
 //------------------------------------------------State change Handlers
     handleChangeN(i){// Handles the change in state of N quantum number
         this.Lbuttons = this.renderLbuttons(i);
         this.setState({n:i,l:0,m:0});
         $('#l0').parent().click();
-        this.setStateParent(i, 0, 0, this.state.resolution);
+        this.setState({resolution:this.ResolutionSlider.value});
+        this.setStateParent(i, 0, 0, this.ResolutionSlider.value);
     }
     handleChangeL(i){// Handles the change in state of L quantum number
         this.Mbuttons = this.renderMbuttons(i);
         this.setState({l:i,m:0});
         $('#m0').parent().click();
-        this.setStateParent(this.state.n, i, 0, this.state.resolution);
+        this.setState({resolution:this.ResolutionSlider.value});
+        this.setStateParent(this.state.n, i, 0, this.ResolutionSlider.value);
     }
     handleChangeM(i){// Handles the change in state of M quantum number
         this.setState({m:i});
-        this.setStateParent(this.state.n, this.state.l, i, this.state.resolution);
+        this.setState({resolution:this.ResolutionSlider.value});
+        this.setStateParent(this.state.n, this.state.l, i, this.ResolutionSlider.value);
     }
 
     handleChangeResolution(i){// Handles the change in state of Resolution
@@ -155,8 +174,7 @@ export default class ControlPanel extends Component{
                         </h3>
                     </div>
                     <div className="btn-group" style={{paddingLeft:'6em'}}>
-                        {this.ResolutionSlider}
-                    </div>
+                        <ResolutionSlider ref="resolution" id="resolution" onChange={(i)=>this.handleChangeResolution(i)}/> </div>
                 </div>
             </div>
         </Fragment>

@@ -49,7 +49,7 @@ export default class Model extends React.Component{
     reload() {
         this.enableRotation = true;
 
-        //this.cameraOffset = 5 + 5 * Math.pow(this.props.n, 2) + 10 * this.props.l;
+        this.cameraOffset = 5 + 5 * Math.pow(this.props.n, 2) + 10 * this.props.l;
 
         let waveFunc = "n" + this.props.n + "l" + this.props.l + "m";
         if (this.props.m > 0)
@@ -71,14 +71,14 @@ export default class Model extends React.Component{
         this.geometry.addAttribute('alpha', new THREE.BufferAttribute(this.cubeAlpha(posArr), 1));
 
         this.particleSystem = new THREE.Points(this.geometry, this.shaderMaterial);
-        /*
+        
         this.modelCamera.position.z = this.cameraOffset;
         this.modelCamera.position.x = 0;
         this.modelCamera.position.y = 0;
         this.axesCamera.position.z = 10;
         this.axesCamera.position.x = 0;
         this.axesCamera.position.y = 0;
-        */
+        
 
 
         //reloadChart();
