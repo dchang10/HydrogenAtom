@@ -53,6 +53,6 @@
     "url": "git:github.com/dchang10/dchang10.github.io.git"
   },
   "devDependencies": {
-    "pm2": "^2.10.4"
+    "pm2": "^5.3.0"
   }
 }
