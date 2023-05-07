@@ -9,7 +9,7 @@
     "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "@fortawesome/react-fontawesome": "0.0.19",
     "ajv": "^6.5.2",
-    "aws-sdk": "^2.274.1",
+    "aws-sdk": "^2.1373.0",
     "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.2",
