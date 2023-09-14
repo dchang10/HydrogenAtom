@@ -13,9 +13,6 @@ export default function Footer(){
                         <a href='https://www.linkedin.com/in/dominic-chang-9382a1b7/'>
                             <FontAwesomeIcon id="linkedIn" icon={brands.faLinkedinIn} style={{height:"2em",width:"3.5em"}}/>
                         </a>
-                        <a href='http://www.piedpiper.com/'>
-                            <FontAwesomeIcon id="piedPiper" icon={brands.faPiedPiperPp} style={{height:"2em",width:"3.5em"}}/>
-                        </a>
             </div>
         </footer>
         )

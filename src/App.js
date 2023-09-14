@@ -21,13 +21,13 @@ class NavigationBar extends Component{
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
                     <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li className="nav-item">
-                            <a className="nav-link" to="/" style={{padding:'1em 0em 1em 1em'}}>Home<span className="sr-only">(current)</span></a>
+                            <a className="nav-link" href="https://dchang10.github.io" style={{padding:'1em 0em 1em 1em'}}>Home<span className="sr-only">(current)</span></a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" to="/projects" style={{padding:'1em 0em 1em 1em'}}>Projects</a>
+                            <a className="nav-link" href="https://dchang10.github.io/projects" style={{padding:'1em 0em 1em 1em'}}>Projects</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" to="/blog/" style={{padding:'1em 0em 1em 1em'}}>Blog</a>
+                            <a className="nav-link" href="https://dchang10.github.io/blog/" style={{padding:'1em 0em 1em 1em'}}>Blog</a>
                         </li>
                     </ul>
                 </div>
